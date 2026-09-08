@@ -1,40 +1,103 @@
-```css
+```html
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="
+    width=device-width,
+    initial-scale=1.0,
+    maximum-scale=1.0,
+    user-scalable=yes
+  "
+>
+
+<title>
+  臺北市政府教育局｜學前科補助服務入口
+</title>
+
+<meta
+  name="description"
+  content="
+    臺北市政府教育局學前科補助進度公告與領具填寫服務總入口
+  "
+>
+
+
+<style>
+
 /* =========================================================
-   長輩超大字 UI / UX 版本
-   直接取代原本整份 <style> 內容
+   01. 全站設計變數
 ========================================================= */
 
 :root {
 
-  --bg: #02050d;
-  --panel: rgba(7,18,39,.94);
+  --bg:
+    #02050c;
 
-  --white: #ffffff;
-  --text: #ffffff;
-  --text-soft: #e7eefb;
-  --text-muted: #c2cde0;
+  --bg2:
+    #071527;
 
-  --cyan: #67e8ff;
-  --blue: #7595ff;
-  --purple: #ac83ff;
-  --pink: #ff82c3;
-  --green: #62f0ad;
+  --panel:
+    rgba(9, 22, 46, .94);
+
+  --panel-hover:
+    rgba(18, 39, 77, .98);
+
+  --white:
+    #ffffff;
+
+  --text:
+    #ffffff;
+
+  --text-light:
+    #e8f0ff;
+
+  --text-muted:
+    #b4c3dd;
+
+  --cyan:
+    #68eaff;
+
+  --blue:
+    #728dff;
+
+  --purple:
+    #a779ff;
+
+  --pink:
+    #ff79c7;
+
+  --green:
+    #54f1a5;
+
+  --orange:
+    #ffc56e;
 
   --border:
-    rgba(255,255,255,.17);
+    rgba(255,255,255,.15);
+
+  --border-strong:
+    rgba(103,232,255,.42);
+
+  --focus:
+    0 0 0 5px rgba(103,232,255,.32);
 
   --radius:
     30px;
 
-  /* 長輩版基準字體 */
-  --base-font:
-    21px;
+  --shadow:
+    0 30px 90px rgba(0,0,0,.52);
 
 }
 
 
 /* =========================================================
-   01. 基本
+   02. 全域
 ========================================================= */
 
 * {
@@ -53,66 +116,140 @@ body {
 
   overflow-x: hidden;
 
-  color: var(--text);
+  color:
+    var(--text);
 
   background:
     radial-gradient(
-      circle at 50% 10%,
-      rgba(80,125,255,.20),
-      transparent 36%
+      circle at 50% 8%,
+      rgba(69,115,255,.22),
+      transparent 34%
     ),
+
     radial-gradient(
-      circle at 15% 80%,
-      rgba(150,90,255,.16),
+      circle at 10% 78%,
+      rgba(151,81,255,.15),
       transparent 30%
     ),
+
     radial-gradient(
-      circle at 90% 75%,
-      rgba(0,220,255,.12),
-      transparent 27%
+      circle at 92% 72%,
+      rgba(36,211,255,.12),
+      transparent 28%
     ),
-    var(--bg);
+
+    linear-gradient(
+      145deg,
+      #01040a,
+      #061020 50%,
+      #07172e
+    );
 
   font-family:
     "Noto Sans TC",
     "PingFang TC",
     "Microsoft JhengHei",
+    "微軟正黑體",
     Arial,
     sans-serif;
 
-  font-size:
-    var(--base-font);
-
-  line-height:
-    1.8;
+  line-height: 1.8;
 
 }
 
-
-/* =========================================================
-   02. 大字按鈕
-========================================================= */
-
 button {
-
   font-family: inherit;
-
 }
 
 button:focus-visible,
-a:focus-visible {
+[role="button"]:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+}
 
-  outline:
-    4px solid var(--cyan);
 
-  outline-offset:
-    4px;
+/* =========================================================
+   03. 大字模式
+========================================================= */
+
+body.large-text {
+
+  --scale:
+    1.15;
+
+}
+
+body.large-text
+.hero-description {
+
+  font-size:
+    28px !important;
+
+}
+
+body.large-text
+.service-card h3 {
+
+  font-size:
+    31px !important;
+
+}
+
+body.large-text
+.service-card p {
+
+  font-size:
+    23px !important;
+
+}
+
+body.large-text
+.service-action {
+
+  font-size:
+    26px !important;
 
 }
 
 
 /* =========================================================
-   03. 星空
+   04. 簡潔模式
+========================================================= */
+
+body.simple-mode
+#spaceCanvas {
+
+  opacity:
+    .20;
+
+}
+
+body.simple-mode
+.space-grid {
+
+  opacity:
+    .035;
+
+}
+
+body.simple-mode *,
+body.simple-mode *::before,
+body.simple-mode *::after {
+
+  animation-duration:
+    .01ms !important;
+
+  animation-iteration-count:
+    1 !important;
+
+  transition-duration:
+    .01ms !important;
+
+}
+
+
+/* =========================================================
+   05. 宇宙背景
 ========================================================= */
 
 #spaceCanvas {
@@ -121,10 +258,10 @@ a:focus-visible {
 
   inset: 0;
 
+  z-index: 0;
+
   width: 100%;
   height: 100%;
-
-  z-index: 0;
 
   pointer-events: none;
 
@@ -143,9 +280,9 @@ a:focus-visible {
   background:
     radial-gradient(
       ellipse at center,
-      transparent 18%,
+      transparent 15%,
       rgba(0,0,0,.12) 55%,
-      rgba(0,0,0,.72) 100%
+      rgba(0,0,0,.75) 100%
     );
 
 }
@@ -157,39 +294,48 @@ a:focus-visible {
   left: -25%;
   right: -25%;
 
-  bottom: -20%;
+  bottom: -18%;
 
-  height: 62%;
-
-  opacity: .11;
+  height: 65%;
 
   z-index: 1;
+
+  opacity: .14;
 
   pointer-events: none;
 
   background-image:
+
     linear-gradient(
-      rgba(110,205,255,.24) 1px,
+      rgba(87,195,255,.23) 1px,
       transparent 1px
     ),
+
     linear-gradient(
       90deg,
-      rgba(110,205,255,.24) 1px,
+      rgba(87,195,255,.23) 1px,
       transparent 1px
     );
 
   background-size:
-    76px 76px;
+    75px 75px;
 
   transform:
-    perspective(700px)
+    perspective(750px)
     rotateX(69deg);
+
+  mask-image:
+    linear-gradient(
+      to top,
+      black,
+      transparent 91%
+    );
 
 }
 
 
 /* =========================================================
-   04. 啟動畫面
+   06. 啟動畫面
 ========================================================= */
 
 #intro {
@@ -202,15 +348,17 @@ a:focus-visible {
 
   display: flex;
 
+  justify-content: center;
+
   align-items: center;
 
-  justify-content: center;
+  padding: 25px;
 
   background:
     radial-gradient(
       circle,
-      rgba(70,120,255,.24),
-      transparent 46%
+      rgba(69,110,255,.22),
+      transparent 45%
     ),
     #01030a;
 
@@ -222,32 +370,37 @@ a:focus-visible {
 
 #intro.hidden {
 
-  opacity: 0;
+  opacity:
+    0;
 
-  visibility: hidden;
+  visibility:
+    hidden;
 
 }
 
-.intro-core {
+.intro-content {
 
   width:
-    min(700px, 90vw);
+    min(650px, 94vw);
 
   text-align:
     center;
 
 }
 
-.intro-logo {
+.intro-orb {
+
+  position:
+    relative;
 
   width:
-    170px;
+    150px;
 
   height:
-    170px;
+    150px;
 
   margin:
-    0 auto 38px;
+    0 auto 35px;
 
   border-radius:
     50%;
@@ -255,44 +408,107 @@ a:focus-visible {
   background:
     radial-gradient(
       circle at 35% 28%,
-      #fff,
-      #9df4ff 18%,
-      #6289ff 53%,
-      #481ba3
+      white,
+      #9df3ff 18%,
+      #5b82ff 55%,
+      #44189e
     );
 
   box-shadow:
-    0 0 45px rgba(100,235,255,.82),
-    0 0 120px rgba(110,90,255,.50);
+
+    0 0 35px rgba(103,232,255,.85),
+
+    0 0 100px rgba(115,88,255,.52),
+
+    0 0 150px rgba(67,192,255,.18);
 
   animation:
     introPulse 2s ease-in-out infinite;
 
 }
 
+.intro-orb::before,
+.intro-orb::after {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  inset:
+    -18px;
+
+  border:
+    2px solid
+      rgba(103,232,255,.38);
+
+  border-radius:
+    50%;
+
+  transform:
+    scaleY(.45);
+
+  animation:
+    introOrbit 4.3s linear infinite;
+
+}
+
+.intro-orb::after {
+
+  inset:
+    -35px;
+
+  border-width:
+    1px;
+
+  border-color:
+    rgba(171,112,255,.26);
+
+  animation:
+    introOrbit 3s linear infinite reverse;
+
+}
+
 .intro-title {
 
   font-size:
-    clamp(30px, 5vw, 48px);
+    38px;
+
+  line-height:
+    1.2;
 
   font-weight:
     1000;
 
-  letter-spacing:
-    .04em;
-
 }
 
-.intro-sub {
+.intro-subtitle {
 
   margin-top:
-    14px;
+    12px;
 
   color:
-    #cad6e9;
+    var(--text-muted);
 
   font-size:
     19px;
+
+}
+
+.intro-loading {
+
+  margin-top:
+    30px;
+
+  color:
+    #bceff9;
+
+  font-size:
+    16px;
+
+  font-weight:
+    800;
 
 }
 
@@ -305,22 +521,50 @@ a:focus-visible {
     5px;
 
   margin-top:
-    36px;
-
-  border-radius:
-    999px;
+    14px;
 
   overflow:
     hidden;
 
+  border-radius:
+    999px;
+
   background:
-    rgba(255,255,255,.09);
+    rgba(255,255,255,.08);
+
+}
+
+.intro-bar::before {
+
+  content:
+    "";
+
+  display:
+    block;
+
+  width:
+    36%;
+
+  height:
+    100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--cyan),
+      var(--purple),
+      transparent
+    );
+
+  animation:
+    loading 1.2s ease-in-out infinite;
 
 }
 
 
 /* =========================================================
-   05. 主容器
+   07. 主體
 ========================================================= */
 
 .main {
@@ -332,7 +576,7 @@ a:focus-visible {
     5;
 
   width:
-    min(1500px, 100%);
+    min(1450px, 100%);
 
   margin:
     auto;
@@ -344,7 +588,7 @@ a:focus-visible {
 
 
 /* =========================================================
-   06. Header
+   08. Header
 ========================================================= */
 
 .topbar {
@@ -359,7 +603,7 @@ a:focus-visible {
     space-between;
 
   gap:
-    20px;
+    25px;
 
 }
 
@@ -392,20 +636,20 @@ a:focus-visible {
 
   background:
     radial-gradient(
-      circle at 35% 30%,
-      #fff,
-      #80efff 23%,
-      #6381ff 55%,
-      #421b9c
+      circle at 35% 28%,
+      white,
+      #80efff 20%,
+      #5d81ff 53%,
+      #411798
     );
 
   box-shadow:
-    0 0 28px rgba(93,231,255,.60),
-    0 0 70px rgba(100,90,255,.30);
+    0 0 28px rgba(103,232,255,.6),
+    0 0 65px rgba(116,89,255,.28);
 
 }
 
-.brand-title {
+.brand-name {
 
   font-size:
     22px;
@@ -413,18 +657,21 @@ a:focus-visible {
   font-weight:
     1000;
 
+  line-height:
+    1.3;
+
 }
 
-.brand-subtitle {
+.brand-sub {
 
   margin-top:
-    2px;
+    3px;
 
   color:
-    #c2cde0;
+    var(--text-muted);
 
   font-size:
-    16px;
+    15px;
 
 }
 
@@ -433,21 +680,24 @@ a:focus-visible {
   display:
     flex;
 
+  align-items:
+    center;
+
   gap:
-    12px;
+    10px;
 
 }
 
 .utility-button {
 
   min-height:
-    62px;
+    58px;
 
   padding:
-    10px 20px;
+    10px 18px;
 
   border:
-    2px solid rgba(255,255,255,.15);
+    1px solid var(--border);
 
   border-radius:
     17px;
@@ -458,56 +708,64 @@ a:focus-visible {
   color:
     white;
 
+  font-size:
+    18px;
+
+  font-weight:
+    900;
+
   cursor:
     pointer;
 
-  font-size:
-    19px;
-
-  font-weight:
-    950;
-
-  backdrop-filter:
-    blur(15px);
+  transition:
+    transform .25s ease,
+    background .25s ease;
 
 }
 
 .utility-button:hover {
 
+  transform:
+    translateY(-2px);
+
   background:
-    rgba(255,255,255,.13);
+    rgba(255,255,255,.12);
 
 }
 
 
 /* =========================================================
-   07. Hero
+   09. Hero
 ========================================================= */
 
 .hero {
 
   min-height:
-    720px;
+    770px;
 
   display:
     grid;
 
   grid-template-columns:
     minmax(0, 1fr)
-    minmax(480px, .9fr);
+    minmax(510px, .88fr);
 
   align-items:
     center;
 
   gap:
-    20px 55px;
+    25px 45px;
 
 }
 
 .hero-copy {
 
-  padding-top:
-    20px;
+  animation:
+    heroIn
+    1s
+    cubic-bezier(.16,1,.3,1)
+    .35s
+    both;
 
 }
 
@@ -529,16 +787,17 @@ a:focus-visible {
     8px 18px;
 
   border:
-    2px solid rgba(103,232,255,.24);
+    1px solid
+      rgba(103,232,255,.28);
 
   border-radius:
     999px;
 
   background:
-    rgba(70,220,255,.075);
+    rgba(65,211,255,.08);
 
   color:
-    #c7f8ff;
+    #c2f8ff;
 
   font-size:
     17px;
@@ -551,10 +810,10 @@ a:focus-visible {
 .eyebrow-dot {
 
   width:
-    12px;
+    13px;
 
   height:
-    12px;
+    13px;
 
   border-radius:
     50%;
@@ -563,29 +822,33 @@ a:focus-visible {
     var(--green);
 
   box-shadow:
-    0 0 13px var(--green);
+    0 0 15px var(--green);
 
 }
 
 .hero h1 {
 
   margin:
-    28px 0 0;
+    30px 0 0;
 
   max-width:
-    920px;
+    900px;
 
   font-size:
-    clamp(52px, 6.4vw, 92px);
+    clamp(
+      60px,
+      7vw,
+      100px
+    );
 
   line-height:
-    1.07;
+    1.02;
+
+  letter-spacing:
+    -.065em;
 
   font-weight:
     1000;
-
-  letter-spacing:
-    -.05em;
 
 }
 
@@ -594,11 +857,11 @@ a:focus-visible {
   background:
     linear-gradient(
       100deg,
-      #fff 0%,
-      #c7f9ff 23%,
-      #75e1ff 46%,
-      #a98aff 73%,
-      #f184ce 100%
+      #ffffff 0%,
+      #c2f8ff 25%,
+      #70e1ff 48%,
+      #aa80ff 74%,
+      #ef82d1 100%
     );
 
   -webkit-background-clip:
@@ -612,36 +875,37 @@ a:focus-visible {
 
 }
 
-.hero-copy p {
+.hero-description {
 
   max-width:
-    800px;
+    820px;
 
   margin:
     30px 0 0;
 
   color:
-    var(--text-soft);
+    var(--text-light);
 
   font-size:
-    24px;
+    25px;
 
   line-height:
-    2;
+    1.95;
+
+  font-weight:
+    600;
 
 }
 
-.hero-copy p strong {
+.hero-description strong {
 
   color:
-    white;
+    #ffffff;
+
+  font-weight:
+    1000;
 
 }
-
-
-/* =========================================================
-   08. 操作提示
-========================================================= */
 
 .hero-notice {
 
@@ -652,47 +916,45 @@ a:focus-visible {
     center;
 
   gap:
-    17px;
+    18px;
 
   max-width:
-    780px;
+    800px;
 
   margin-top:
     32px;
 
   padding:
-    22px 24px;
+    20px 22px;
 
   border:
-    2px solid rgba(98,240,173,.20);
+    1px solid
+      rgba(84,241,165,.20);
 
   border-radius:
-    22px;
-
-  background:
-    rgba(62,240,165,.055);
-
-  color:
-    #e3fff2;
-
-  font-size:
     20px;
 
-  line-height:
-    1.65;
+  background:
+    rgba(84,241,165,.055);
+
+  color:
+    #e4fff3;
+
+  font-size:
+    19px;
 
   font-weight:
-    850;
+    800;
 
 }
 
-.hero-notice-icon {
+.notice-icon {
 
   width:
-    55px;
+    54px;
 
   height:
-    55px;
+    54px;
 
   flex:
     0 0 auto;
@@ -704,25 +966,22 @@ a:focus-visible {
     center;
 
   border-radius:
-    17px;
+    16px;
 
   background:
-    rgba(85,240,164,.14);
+    rgba(84,241,165,.12);
 
   color:
     var(--green);
 
   font-size:
-    30px;
-
-  font-weight:
-    1000;
+    29px;
 
 }
 
 
 /* =========================================================
-   09. 3D Portal
+   10. 3D Portal
 ========================================================= */
 
 .portal-area {
@@ -731,7 +990,7 @@ a:focus-visible {
     relative;
 
   min-height:
-    650px;
+    710px;
 
   display:
     flex;
@@ -745,6 +1004,13 @@ a:focus-visible {
   perspective:
     1800px;
 
+  animation:
+    heroIn
+    1s
+    cubic-bezier(.16,1,.3,1)
+    .55s
+    both;
+
 }
 
 .portal-halo {
@@ -753,10 +1019,10 @@ a:focus-visible {
     absolute;
 
   width:
-    580px;
+    600px;
 
   height:
-    580px;
+    600px;
 
   border-radius:
     50%;
@@ -764,13 +1030,19 @@ a:focus-visible {
   background:
     radial-gradient(
       circle,
-      rgba(80,230,255,.30),
-      rgba(116,85,255,.17) 39%,
-      transparent 72%
+      rgba(76,224,255,.31),
+      rgba(115,77,255,.16) 38%,
+      transparent 70%
     );
 
   filter:
-    blur(14px);
+    blur(16px);
+
+  animation:
+    haloPulse
+    4s
+    ease-in-out
+    infinite;
 
 }
 
@@ -780,10 +1052,10 @@ a:focus-visible {
     relative;
 
   width:
-    450px;
+    500px;
 
   height:
-    600px;
+    650px;
 
 }
 
@@ -793,30 +1065,80 @@ a:focus-visible {
     absolute;
 
   inset:
-    10px;
-
-  border-radius:
-    46% 46% 26px 26px;
+    18px;
 
   border:
-    2px solid rgba(112,230,255,.34);
+    1px solid
+      rgba(104,230,255,.38);
+
+  border-radius:
+    47% 47% 26px 26px;
 
   box-shadow:
-    0 0 25px rgba(100,225,255,.13),
-    inset 0 0 45px rgba(100,225,255,.07);
+    0 0 25px rgba(104,230,255,.16),
+    inset 0 0 50px rgba(104,230,255,.08);
+
+  transform:
+    translateZ(-80px);
+
+  animation:
+    floatPortal
+    4.2s
+    ease-in-out
+    infinite;
 
 }
 
-.portal-platform {
+.portal-ring::before {
+
+  content:
+    "";
 
   position:
     absolute;
 
-  bottom:
-    22px;
+  inset:
+    20px;
+
+  border:
+    1px solid
+      rgba(168,110,255,.27);
+
+  border-radius:
+    inherit;
+
+}
+
+.portal-ring::after {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  inset:
+    40px;
+
+  border:
+    1px solid
+      rgba(104,230,255,.12);
+
+  border-radius:
+    inherit;
+
+}
+
+.portal-floor {
+
+  position:
+    absolute;
 
   left:
     50%;
+
+  bottom:
+    13px;
 
   width:
     470px;
@@ -826,27 +1148,205 @@ a:focus-visible {
 
   transform:
     translateX(-50%)
-    perspective(400px)
-    rotateX(64deg);
+    perspective(500px)
+    rotateX(66deg);
+
+  border:
+    1px solid
+      rgba(104,230,255,.28);
 
   border-radius:
     50%;
 
-  border:
-    2px solid rgba(105,231,255,.26);
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(91,226,255,.18),
+      transparent 68%
+    );
+
+  box-shadow:
+    0 0 45px
+      rgba(91,226,255,.13);
 
 }
 
-.portal-door-frame {
+.door-wrapper {
+
+  position:
+    absolute;
+
+  left:
+    50%;
+
+  top:
+    48px;
+
+  width:
+    410px;
+
+  height:
+    560px;
+
+  transform:
+    translateX(-50%);
+
+  transform-style:
+    preserve-3d;
+
+}
+
+.door-inner {
 
   position:
     absolute;
 
   inset:
-    52px 46px 60px;
+    0;
 
   transform-style:
     preserve-3d;
+
+  transition:
+    transform
+    1.55s
+    cubic-bezier(.16,1,.3,1);
+
+}
+
+.portal-inside {
+
+  position:
+    absolute;
+
+  inset:
+    10px;
+
+  overflow:
+    hidden;
+
+  border-radius:
+    175px 175px 20px 20px;
+
+  z-index:
+    1;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(201,251,255,.95),
+      rgba(78,225,255,.42) 15%,
+      rgba(83,89,255,.30) 34%,
+      rgba(52,18,108,.65) 57%,
+      rgba(0,0,0,.98) 81%
+    );
+
+  box-shadow:
+    inset 0 0 120px
+      rgba(93,227,255,.35);
+
+}
+
+.portal-core {
+
+  position:
+    absolute;
+
+  left:
+    50%;
+
+  top:
+    46%;
+
+  width:
+    205px;
+
+  height:
+    205px;
+
+  transform:
+    translate(-50%,-50%);
+
+  border-radius:
+    50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #ffffff 0%,
+      #c5faff 8%,
+      #68e7ff 23%,
+      #666eff 44%,
+      #3c107b 67%,
+      transparent 71%
+    );
+
+  box-shadow:
+    0 0 45px rgba(102,231,255,.95),
+    0 0 120px rgba(103,90,255,.68),
+    0 0 210px rgba(237,88,204,.30);
+
+  animation:
+    coreFloat
+    3s
+    ease-in-out
+    infinite;
+
+}
+
+.portal-core::before {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  inset:
+    -52px;
+
+  border:
+    1px solid
+      rgba(111,234,255,.35);
+
+  border-radius:
+    50%;
+
+  transform:
+    scaleX(1.5)
+    rotate(-24deg);
+
+  animation:
+    coreOrbit
+    4.5s
+    linear
+    infinite;
+
+}
+
+.portal-core::after {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  inset:
+    -27px;
+
+  border:
+    1px solid
+      rgba(194,111,255,.28);
+
+  border-radius:
+    50%;
+
+  animation:
+    coreOrbit
+    3.1s
+    linear
+    infinite reverse;
 
 }
 
@@ -864,6 +1364,9 @@ a:focus-visible {
   width:
     50%;
 
+  z-index:
+    5;
+
   overflow:
     hidden;
 
@@ -871,21 +1374,21 @@ a:focus-visible {
     linear-gradient(
       145deg,
       rgba(5,13,30,.99),
-      rgba(18,37,72,.98)
+      rgba(18,37,75,.98)
     );
 
   border:
-    2px solid rgba(150,229,255,.17);
+    1px solid
+      rgba(157,228,255,.18);
 
   box-shadow:
-    inset 0 0 42px rgba(70,216,255,.07);
+    inset 0 0 50px
+      rgba(93,224,255,.06);
 
   transition:
-    transform 1.65s
+    transform
+    1.6s
     cubic-bezier(.16,1,.3,1);
-
-  z-index:
-    6;
 
 }
 
@@ -898,7 +1401,7 @@ a:focus-visible {
     left center;
 
   border-radius:
-    155px 14px 14px 14px;
+    180px 14px 14px 14px;
 
 }
 
@@ -911,79 +1414,168 @@ a:focus-visible {
     right center;
 
   border-radius:
-    14px 155px 14px 14px;
+    14px 180px 14px 14px;
 
 }
 
-.portal-door-frame.open
+.door-wrapper.open
 .portal-door.left {
 
   transform:
-    rotateY(-102deg)
+    rotateY(-103deg)
     translateZ(25px);
 
 }
 
-.portal-door-frame.open
+.door-wrapper.open
 .portal-door.right {
 
   transform:
-    rotateY(102deg)
+    rotateY(103deg)
     translateZ(25px);
 
 }
 
-.portal-inside {
+.door-panel {
 
   position:
     absolute;
 
-  inset:
-    9px;
+  left:
+    22px;
 
-  overflow:
-    hidden;
+  right:
+    22px;
 
-  z-index:
-    3;
+  top:
+    110px;
+
+  bottom:
+    25px;
+
+  border:
+    1px solid
+      rgba(255,255,255,.06);
 
   border-radius:
-    155px 155px 18px 18px;
+    21px;
 
   background:
-    radial-gradient(
-      circle,
-      rgba(210,252,255,.95),
-      rgba(88,230,255,.43) 15%,
-      rgba(96,91,255,.29) 35%,
-      rgba(44,14,103,.68) 57%,
-      rgba(0,0,0,.99) 80%
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.05),
+      transparent 63%
     );
-
-  box-shadow:
-    inset 0 0 100px rgba(96,227,255,.32);
 
 }
 
-.portal-core {
+.door-line {
+
+  position:
+    absolute;
+
+  top:
+    135px;
+
+  left:
+    50%;
 
   width:
-    190px;
+    2px;
 
   height:
-    190px;
+    310px;
+
+  background:
+    linear-gradient(
+      transparent,
+      rgba(110,229,255,.6),
+      transparent
+    );
+
+  z-index:
+    7;
+
+}
+
+.door-handle {
+
+  position:
+    absolute;
+
+  top:
+    53%;
+
+  width:
+    15px;
+
+  height:
+    15px;
+
+  border-radius:
+    50%;
+
+  background:
+    #adf5ff;
+
+  box-shadow:
+    0 0 18px #80edff;
+
+}
+
+.portal-door.left
+.door-handle {
+
+  right:
+    16px;
+
+}
+
+.portal-door.right
+.door-handle {
+
+  left:
+    16px;
+
+}
+
+.portal-caption {
+
+  position:
+    absolute;
+
+  left:
+    0;
+
+  right:
+    0;
+
+  bottom:
+    -26px;
+
+  text-align:
+    center;
+
+  color:
+    #d7e8ff;
+
+  font-size:
+    17px;
+
+  font-weight:
+    900;
 
 }
 
 
 /* =========================================================
-   10. 區塊標題
+   11. 補助服務
 ========================================================= */
 
 .services {
 
   margin-top:
-    10px;
+    40px;
 
 }
 
@@ -999,7 +1591,7 @@ a:focus-visible {
     flex-end;
 
   gap:
-    25px;
+    30px;
 
   margin-bottom:
     30px;
@@ -1012,10 +1604,10 @@ a:focus-visible {
     var(--cyan);
 
   font-size:
-    15px;
+    16px;
 
   font-weight:
-    1000;
+    950;
 
   letter-spacing:
     .14em;
@@ -1028,7 +1620,11 @@ a:focus-visible {
     6px 0 0;
 
   font-size:
-    clamp(38px, 4.5vw, 58px);
+    clamp(
+      39px,
+      5vw,
+      58px
+    );
 
   line-height:
     1.15;
@@ -1053,7 +1649,7 @@ a:focus-visible {
     19px;
 
   line-height:
-    1.85;
+    1.8;
 
   text-align:
     right;
@@ -1062,7 +1658,7 @@ a:focus-visible {
 
 
 /* =========================================================
-   11. 超大補助卡片
+   12. 超大補助卡片
 ========================================================= */
 
 .services-grid {
@@ -1073,7 +1669,7 @@ a:focus-visible {
   grid-template-columns:
     repeat(
       3,
-      minmax(0, 1fr)
+      minmax(0,1fr)
     );
 
   gap:
@@ -1090,16 +1686,17 @@ a:focus-visible {
     relative;
 
   min-height:
-    380px;
+    390px;
 
   padding:
-    32px;
+    34px;
 
   overflow:
     hidden;
 
   border:
-    2px solid rgba(255,255,255,.13);
+    1px solid
+      rgba(255,255,255,.14);
 
   border-radius:
     30px;
@@ -1107,42 +1704,49 @@ a:focus-visible {
   background:
     linear-gradient(
       145deg,
-      rgba(11,28,57,.97),
-      rgba(3,9,23,.98)
+      rgba(10,25,53,.96),
+      rgba(4,10,25,.97)
     );
 
   box-shadow:
-    0 25px 80px rgba(0,0,0,.42);
+    var(--shadow);
 
   cursor:
     pointer;
 
   transition:
-    transform .40s
-    cubic-bezier(.16,1,.3,1),
-    border-color .35s ease,
-    box-shadow .35s ease;
+    transform .4s
+      cubic-bezier(.16,1,.3,1),
+    border-color .3s ease,
+    background .3s ease,
+    box-shadow .3s ease;
 
 }
 
 .service-card:hover {
 
   transform:
-    translateY(-9px);
+    translateY(-10px)
+    scale(1.012);
 
   border-color:
-    color-mix(
-      in srgb,
-      var(--accent) 60%,
-      white 10%
+    var(--accent);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(17,39,80,.99),
+      rgba(6,14,33,.99)
     );
 
   box-shadow:
-    0 35px 100px rgba(0,0,0,.52),
-    0 0 40px
+    0 40px 110px
+      rgba(0,0,0,.56),
+
+    0 0 45px
       color-mix(
         in srgb,
-        var(--accent) 9%,
+        var(--accent) 13%,
         transparent
       );
 
@@ -1156,13 +1760,13 @@ a:focus-visible {
   position:
     absolute;
 
+  top:
+    0;
+
   left:
     0;
 
   right:
-    0;
-
-  top:
     0;
 
   height:
@@ -1178,19 +1782,55 @@ a:focus-visible {
 
 }
 
+.service-card::after {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  width:
+    300px;
+
+  height:
+    300px;
+
+  top:
+    -160px;
+
+  right:
+    -160px;
+
+  border-radius:
+    50%;
+
+  background:
+    radial-gradient(
+      circle,
+      color-mix(
+        in srgb,
+        var(--accent) 17%,
+        transparent
+      ),
+      transparent 70%
+    );
+
+}
+
 .service-number {
 
   position:
     absolute;
 
   top:
-    28px;
+    26px;
 
   right:
     28px;
 
   color:
-    rgba(255,255,255,.30);
+    rgba(255,255,255,.28);
 
   font-size:
     15px;
@@ -1198,15 +1838,18 @@ a:focus-visible {
   font-weight:
     1000;
 
+  letter-spacing:
+    .12em;
+
 }
 
 .service-icon {
 
   width:
-    86px;
+    82px;
 
   height:
-    86px;
+    82px;
 
   display:
     grid;
@@ -1215,18 +1858,22 @@ a:focus-visible {
     center;
 
   border:
-    2px solid
+    1px solid
       color-mix(
         in srgb,
-        var(--accent) 38%,
+        var(--accent) 45%,
         white 5%
       );
 
   border-radius:
-    25px;
+    24px;
 
   background:
-    rgba(255,255,255,.07);
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.12),
+      rgba(255,255,255,.025)
+    );
 
   color:
     var(--accent);
@@ -1236,11 +1883,11 @@ a:focus-visible {
 
   box-shadow:
     0 15px 40px
-    color-mix(
-      in srgb,
-      var(--accent) 13%,
-      transparent
-    );
+      color-mix(
+        in srgb,
+        var(--accent) 12%,
+        transparent
+      );
 
 }
 
@@ -1249,36 +1896,42 @@ a:focus-visible {
   margin:
     25px 0 0;
 
+  max-width:
+    90%;
+
   font-size:
-    31px;
+    29px;
 
   line-height:
-    1.42;
+    1.45;
 
   font-weight:
     1000;
 
-  color:
-    white;
+  letter-spacing:
+    -.02em;
 
 }
 
 .service-card p {
 
   min-height:
-    75px;
+    76px;
 
   margin:
-    13px 0 0;
+    11px 0 0;
 
   color:
-    var(--text-soft);
+    var(--text-muted);
 
   font-size:
-    20px;
+    19px;
 
   line-height:
     1.75;
+
+  font-weight:
+    600;
 
 }
 
@@ -1288,22 +1941,22 @@ a:focus-visible {
     absolute;
 
   left:
-    32px;
+    34px;
 
   right:
-    32px;
+    34px;
 
   bottom:
-    28px;
+    29px;
 
   display:
     flex;
 
-  justify-content:
-    space-between;
-
   align-items:
     center;
+
+  justify-content:
+    space-between;
 
   gap:
     15px;
@@ -1322,23 +1975,23 @@ a:focus-visible {
     10px;
 
   color:
-    #e1eafa;
+    #dce8fb;
 
   font-size:
     16px;
 
   font-weight:
-    900;
+    850;
 
 }
 
 .online-dot {
 
   width:
-    12px;
+    13px;
 
   height:
-    12px;
+    13px;
 
   border-radius:
     50%;
@@ -1354,10 +2007,10 @@ a:focus-visible {
 .service-action {
 
   min-height:
-    76px;
+    68px;
 
   padding:
-    13px 25px;
+    10px 25px;
 
   display:
     inline-flex;
@@ -1369,15 +2022,15 @@ a:focus-visible {
     center;
 
   border:
-    2px solid
+    1px solid
       color-mix(
         in srgb,
-        var(--accent) 50%,
-        white 10%
+        var(--accent) 52%,
+        white 8%
       );
 
   border-radius:
-    18px;
+    17px;
 
   background:
     color-mix(
@@ -1390,13 +2043,16 @@ a:focus-visible {
     white;
 
   font-size:
-    24px;
+    23px;
 
   font-weight:
     1000;
 
   white-space:
     nowrap;
+
+  transition:
+    .3s ease;
 
 }
 
@@ -1407,13 +2063,13 @@ a:focus-visible {
     var(--accent);
 
   color:
-    #02121a;
+    #03111a;
 
 }
 
 
 /* =========================================================
-   12. 三步操作說明
+   13. 三步驟
 ========================================================= */
 
 .guide {
@@ -1422,10 +2078,10 @@ a:focus-visible {
     grid;
 
   grid-template-columns:
-    repeat(3, 1fr);
+    repeat(3,1fr);
 
   gap:
-    20px;
+    18px;
 
   margin-top:
     28px;
@@ -1433,9 +2089,6 @@ a:focus-visible {
 }
 
 .guide-item {
-
-  min-height:
-    105px;
 
   display:
     flex;
@@ -1446,27 +2099,31 @@ a:focus-visible {
   gap:
     16px;
 
+  min-height:
+    92px;
+
   padding:
-    20px;
+    18px 21px;
 
   border:
-    2px solid rgba(255,255,255,.10);
+    1px solid
+      rgba(255,255,255,.10);
 
   border-radius:
     20px;
 
   background:
-    rgba(255,255,255,.045);
+    rgba(255,255,255,.04);
 
 }
 
 .guide-icon {
 
   width:
-    55px;
+    52px;
 
   height:
-    55px;
+    52px;
 
   flex:
     0 0 auto;
@@ -1487,7 +2144,7 @@ a:focus-visible {
     var(--cyan);
 
   font-size:
-    24px;
+    25px;
 
   font-weight:
     1000;
@@ -1500,7 +2157,7 @@ a:focus-visible {
     block;
 
   font-size:
-    19px;
+    18px;
 
   font-weight:
     1000;
@@ -1513,46 +2170,47 @@ a:focus-visible {
     block;
 
   margin-top:
-    3px;
+    2px;
 
   color:
     var(--text-muted);
 
   font-size:
-    16px;
+    15px;
 
 }
 
 
 /* =========================================================
-   13. Footer
+   14. Footer
 ========================================================= */
 
 .footer {
 
   margin-top:
-    75px;
+    80px;
 
   padding-top:
     25px;
 
   border-top:
-    2px solid rgba(255,255,255,.08);
+    1px solid
+      rgba(255,255,255,.08);
 
   color:
-    #adb9cd;
+    #98a8c1;
+
+  font-size:
+    15px;
 
   text-align:
     center;
-
-  font-size:
-    16px;
 
 }
 
 
 /* =========================================================
-   14. 子系統視窗
+   15. 子系統 Modal
 ========================================================= */
 
 #systemModal {
@@ -1582,7 +2240,7 @@ a:focus-visible {
     rgba(0,0,0,.92);
 
   backdrop-filter:
-    blur(18px);
+    blur(20px);
 
   opacity:
     0;
@@ -1591,8 +2249,8 @@ a:focus-visible {
     hidden;
 
   transition:
-    opacity .35s ease,
-    visibility .35s ease;
+    opacity .3s ease,
+    visibility .3s ease;
 
 }
 
@@ -1621,7 +2279,8 @@ a:focus-visible {
     hidden;
 
   border:
-    2px solid rgba(120,227,255,.25);
+    2px solid
+      rgba(108,230,255,.25);
 
   border-radius:
     15px;
@@ -1630,7 +2289,23 @@ a:focus-visible {
     white;
 
   box-shadow:
-    0 35px 140px rgba(0,0,0,.75);
+    0 35px 140px
+      rgba(0,0,0,.78);
+
+  transform:
+    scale(.96);
+
+  transition:
+    transform .45s
+      cubic-bezier(.16,1,.3,1);
+
+}
+
+#systemModal.active
+.system-shell {
+
+  transform:
+    scale(1);
 
 }
 
@@ -1649,10 +2324,10 @@ a:focus-visible {
     0;
 
   z-index:
-    10;
+    20;
 
   min-height:
-    86px;
+    82px;
 
   display:
     flex;
@@ -1667,60 +2342,32 @@ a:focus-visible {
     15px;
 
   padding:
-    12px 18px;
+    10px 15px;
 
   background:
     linear-gradient(
       to bottom,
-      rgba(2,7,16,.99),
-      rgba(2,7,16,.94),
-      rgba(2,7,16,.72),
+      rgba(2,7,15,.98),
+      rgba(2,7,15,.91),
+      rgba(2,7,15,.65),
       transparent
     );
+
+  pointer-events:
+    none;
 
 }
 
 .system-title {
 
+  pointer-events:
+    auto;
+
   padding-left:
-    10px;
+    12px;
 
   color:
     white;
-
-  font-size:
-    22px;
-
-  font-weight:
-    1000;
-
-}
-
-.system-back {
-
-  min-width:
-    210px;
-
-  min-height:
-    64px;
-
-  padding:
-    10px 22px;
-
-  border:
-    2px solid rgba(255,255,255,.20);
-
-  border-radius:
-    17px;
-
-  background:
-    rgba(4,13,28,.96);
-
-  color:
-    white;
-
-  cursor:
-    pointer;
 
   font-size:
     21px;
@@ -1730,10 +2377,48 @@ a:focus-visible {
 
 }
 
+.system-back {
+
+  pointer-events:
+    auto;
+
+  min-width:
+    190px;
+
+  min-height:
+    62px;
+
+  padding:
+    10px 23px;
+
+  border:
+    1px solid
+      rgba(255,255,255,.20);
+
+  border-radius:
+    16px;
+
+  background:
+    rgba(4,13,27,.95);
+
+  color:
+    white;
+
+  font-size:
+    20px;
+
+  font-weight:
+    1000;
+
+  cursor:
+    pointer;
+
+}
+
 .system-back:hover {
 
   background:
-    rgba(255,255,255,.14);
+    rgba(255,255,255,.13);
 
 }
 
@@ -1746,7 +2431,7 @@ a:focus-visible {
     100%;
 
   border:
-    0;
+    none;
 
   display:
     block;
@@ -1758,7 +2443,7 @@ a:focus-visible {
 
 
 /* =========================================================
-   15. Loading
+   16. 子系統載入中
 ========================================================= */
 
 #systemLoading {
@@ -1770,13 +2455,10 @@ a:focus-visible {
     0;
 
   z-index:
-    8;
+    15;
 
   display:
     flex;
-
-  flex-direction:
-    column;
 
   align-items:
     center;
@@ -1784,15 +2466,34 @@ a:focus-visible {
   justify-content:
     center;
 
+  flex-direction:
+    column;
+
   gap:
-    22px;
+    18px;
+
+  color:
+    white;
 
   background:
     radial-gradient(
       circle,
-      rgba(50,112,210,.28),
+      rgba(50,112,207,.30),
       rgba(0,0,0,.97) 70%
     );
+
+  transition:
+    opacity .5s ease;
+
+  pointer-events:
+    none;
+
+}
+
+#systemLoading.hide {
+
+  opacity:
+    0;
 
 }
 
@@ -1805,7 +2506,8 @@ a:focus-visible {
     90px;
 
   border:
-    4px solid rgba(255,255,255,.10);
+    4px solid
+      rgba(255,255,255,.10);
 
   border-top-color:
     var(--cyan);
@@ -1815,6 +2517,9 @@ a:focus-visible {
 
   border-radius:
     50%;
+
+  animation:
+    spin .8s linear infinite;
 
 }
 
@@ -1831,16 +2536,16 @@ a:focus-visible {
 .loading-sub {
 
   color:
-    #b8c8df;
+    #adbed8;
 
   font-size:
-    19px;
+    17px;
 
 }
 
 
 /* =========================================================
-   16. Toast
+   17. Toast
 ========================================================= */
 
 #toast {
@@ -1852,34 +2557,36 @@ a:focus-visible {
     50%;
 
   bottom:
-    28px;
+    25px;
 
   z-index:
     120000;
 
   width:
-    min(
-      760px,
-      calc(100vw - 30px)
-    );
+    min(760px, calc(100vw - 30px));
 
   padding:
-    18px 22px;
+    17px 22px;
 
   border:
-    2px solid rgba(255,255,255,.14);
+    1px solid
+      rgba(255,255,255,.14);
 
   border-radius:
-    18px;
+    16px;
 
   background:
-    rgba(4,12,25,.97);
+    rgba(5,13,27,.97);
 
   color:
     white;
 
+  box-shadow:
+    0 30px 75px
+      rgba(0,0,0,.52);
+
   font-size:
-    20px;
+    18px;
 
   font-weight:
     900;
@@ -1888,7 +2595,7 @@ a:focus-visible {
     center;
 
   transform:
-    translate(-50%, 35px);
+    translate(-50%, 30px);
 
   opacity:
     0;
@@ -1903,139 +2610,221 @@ a:focus-visible {
 
 #toast.show {
 
-  transform:
-    translate(-50%, 0);
-
   opacity:
     1;
 
   visibility:
     visible;
 
-}
-
-
-/* =========================================================
-   17. 超大字模式
-========================================================= */
-
-body.large-text {
-
-  --base-font:
-    24px;
-
-}
-
-body.large-text
-.hero-copy p {
-
-  font-size:
-    27px;
-
-}
-
-body.large-text
-.service-card h3 {
-
-  font-size:
-    35px;
-
-}
-
-body.large-text
-.service-card p {
-
-  font-size:
-    22px;
-
-}
-
-body.large-text
-.service-action {
-
-  min-height:
-    84px;
-
-  font-size:
-    28px;
-
-}
-
-body.large-text
-.utility-button {
-
-  min-height:
-    70px;
-
-  font-size:
-    22px;
+  transform:
+    translate(-50%, 0);
 
 }
 
 
 /* =========================================================
-   18. 簡潔模式
+   18. 動畫
 ========================================================= */
 
-body.simple-mode
-#spaceCanvas {
+@keyframes introPulse {
 
-  opacity:
-    .20;
+  0%,100% {
+    transform:
+      scale(.96);
+  }
 
-}
-
-body.simple-mode
-.space-grid {
-
-  opacity:
-    .03;
+  50% {
+    transform:
+      scale(1.05);
+  }
 
 }
 
-body.simple-mode
-*,
-body.simple-mode
-*::before,
-body.simple-mode
-*::after {
+@keyframes introOrbit {
 
-  animation-duration:
-    .01ms !important;
+  from {
+    transform:
+      rotate(0)
+      scaleY(.48);
+  }
 
-  animation-iteration-count:
-    1 !important;
+  to {
+    transform:
+      rotate(360deg)
+      scaleY(.48);
+  }
 
-  transition-duration:
-    .01ms !important;
+}
+
+@keyframes loading {
+
+  0% {
+    transform:
+      translateX(-180%);
+  }
+
+  100% {
+    transform:
+      translateX(430%);
+  }
+
+}
+
+@keyframes heroIn {
+
+  from {
+
+    opacity:
+      0;
+
+    transform:
+      translateY(42px)
+      scale(.985);
+
+    filter:
+      blur(7px);
+
+  }
+
+  to {
+
+    opacity:
+      1;
+
+    transform:
+      translateY(0)
+      scale(1);
+
+    filter:
+      blur(0);
+
+  }
+
+}
+
+@keyframes haloPulse {
+
+  0%,100% {
+
+    transform:
+      scale(.93);
+
+    opacity:
+      .68;
+
+  }
+
+  50% {
+
+    transform:
+      scale(1.08);
+
+    opacity:
+      1;
+
+  }
+
+}
+
+@keyframes floatPortal {
+
+  0%,100% {
+
+    transform:
+      translateZ(-80px)
+      translateY(0);
+
+  }
+
+  50% {
+
+    transform:
+      translateZ(-80px)
+      translateY(-11px);
+
+  }
+
+}
+
+@keyframes coreFloat {
+
+  0%,100% {
+
+    transform:
+      translate(-50%,-50%)
+      scale(.96);
+
+  }
+
+  50% {
+
+    transform:
+      translate(-50%,-54%)
+      scale(1.05);
+
+  }
+
+}
+
+@keyframes coreOrbit {
+
+  from {
+
+    transform:
+      rotate(0)
+      scaleX(1.5)
+      rotate(-24deg);
+
+  }
+
+  to {
+
+    transform:
+      rotate(360deg)
+      scaleX(1.5)
+      rotate(-24deg);
+
+  }
+
+}
+
+@keyframes spin {
+
+  to {
+    transform:
+      rotate(360deg);
+  }
 
 }
 
 
 /* =========================================================
-   19. 平板
+   19. 1100px 以下
 ========================================================= */
 
-@media (max-width: 1200px) {
+@media (max-width:1100px) {
 
   .hero {
 
     grid-template-columns:
       1fr;
 
+    min-height:
+      auto;
+
   }
 
   .hero-copy {
 
+    padding-top:
+      75px;
+
     text-align:
       center;
 
-    padding-top:
-      65px;
-
   }
 
-  .hero-copy p {
+  .hero-description {
 
     margin-left:
       auto;
@@ -2061,17 +2850,28 @@ body.simple-mode
   .portal-area {
 
     margin-top:
-      15px;
+      20px;
 
   }
 
   .services-grid {
 
     grid-template-columns:
-      repeat(
-        2,
-        minmax(0, 1fr)
-      );
+      repeat(2,1fr);
+
+  }
+
+  .guide {
+
+    grid-template-columns:
+      1fr;
+
+  }
+
+  .section-head {
+
+    align-items:
+      flex-start;
 
   }
 
@@ -2086,15 +2886,15 @@ body.simple-mode
 
 
 /* =========================================================
-   20. 手機：再放大
+   20. 760px 以下
 ========================================================= */
 
-@media (max-width: 700px) {
+@media (max-width:760px) {
 
   .main {
 
     padding:
-      17px 14px 70px;
+      18px 15px 70px;
 
   }
 
@@ -2105,121 +2905,105 @@ body.simple-mode
 
   }
 
-  .top-actions {
-
-    flex-direction:
-      column;
-
-  }
-
-  .utility-button {
-
-    min-height:
-      55px;
-
-    padding:
-      8px 13px;
-
-    font-size:
-      16px;
-
-  }
-
   .brand-orb {
 
     width:
-      48px;
+      50px;
 
     height:
-      48px;
+      50px;
 
   }
 
-  .brand-title {
+  .brand-name {
 
     font-size:
-      16px;
+      18px;
 
   }
 
-  .brand-subtitle {
+  .brand-sub {
 
     font-size:
       12px;
 
   }
 
-  .hero-copy {
+  .top-actions {
 
-    padding-top:
-      52px;
+    flex-direction:
+      column;
+
+    align-items:
+      stretch;
 
   }
 
-  .eyebrow {
+  .utility-button {
+
+    min-height:
+      52px;
+
+    padding:
+      8px 13px;
 
     font-size:
       15px;
 
-    min-height:
-      46px;
+  }
+
+  .hero {
+
+    margin-top:
+      10px;
+
+  }
+
+  .hero-copy {
+
+    padding-top:
+      50px;
 
   }
 
   .hero h1 {
 
     font-size:
-      50px;
-
-    line-height:
-      1.10;
+      53px;
 
   }
 
-  .hero-copy p {
+  .hero-description {
 
     font-size:
-      22px;
-
-    line-height:
-      1.9;
+      21px;
 
   }
 
   .hero-notice {
 
-    padding:
-      18px;
-
     font-size:
-      19px;
+      17px;
 
   }
 
   .portal-area {
 
     min-height:
-      520px;
+      590px;
 
     transform:
       scale(.82);
 
     margin:
-      -35px 0 -35px;
+      -30px 0 -35px;
 
   }
 
   .section-title {
 
     font-size:
-      38px;
-
-  }
-
-  .section-description {
-
-    font-size:
-      18px;
+      39px;
 
   }
 
@@ -2234,141 +3018,6 @@ body.simple-mode
 
     min-height:
       365px;
-
-    padding:
-      28px;
-
-  }
-
-  .service-icon {
-
-    width:
-      82px;
-
-    height:
-      82px;
-
-  }
-
-  .service-card h3 {
-
-    font-size:
-      29px;
-
-  }
-
-  .service-card p {
-
-    font-size:
-      20px;
-
-  }
-
-  .service-action {
-
-    min-height:
-      75px;
-
-    font-size:
-      23px;
-
-  }
-
-  .service-status {
-
-    font-size:
-      15px;
-
-  }
-
-  .guide {
-
-    grid-template-columns:
-      1fr;
-
-  }
-
-  .guide-item {
-
-    min-height:
-      96px;
-
-  }
-
-  .guide-text strong {
-
-    font-size:
-      19px;
-
-  }
-
-  .guide-text span {
-
-    font-size:
-      16px;
-
-  }
-
-  .system-title {
-
-    font-size:
-      17px;
-
-  }
-
-  .system-back {
-
-    min-width:
-      145px;
-
-    min-height:
-      60px;
-
-    padding:
-      8px 13px;
-
-    font-size:
-      17px;
-
-  }
-
-}
-
-
-/* =========================================================
-   21. 極小手機
-========================================================= */
-
-@media (max-width: 450px) {
-
-  .top-actions {
-
-    display:
-      none;
-
-  }
-
-  .hero h1 {
-
-    font-size:
-      44px;
-
-  }
-
-  .hero-copy p {
-
-    font-size:
-      21px;
-
-  }
-
-  .portal-area {
-
-    transform:
-      scale(.73);
-
-    margin:
-      -70px 0 -80px;
 
   }
 
@@ -2386,26 +3035,130 @@ body.simple-mode
 
   }
 
+}
+
+
+/* =========================================================
+   21. 超小手機
+========================================================= */
+
+@media (max-width:480px) {
+
+  .topbar {
+
+    flex-direction:
+      column;
+
+    align-items:
+      stretch;
+
+  }
+
+  .top-actions {
+
+    flex-direction:
+      row;
+
+  }
+
+  .utility-button {
+
+    flex:
+      1;
+
+  }
+
+  .hero h1 {
+
+    font-size:
+      47px;
+
+  }
+
+  .hero-description {
+
+    font-size:
+      20px;
+
+  }
+
+  .portal-area {
+
+    transform:
+      scale(.72);
+
+    margin:
+      -65px 0 -65px;
+
+  }
+
+  .service-card {
+
+    padding:
+      28px;
+
+  }
+
+  .service-card h3 {
+
+    font-size:
+      26px;
+
+  }
+
   .service-bottom {
 
     left:
-      24px;
+      28px;
 
     right:
-      24px;
+      28px;
 
   }
 
   .service-action {
 
     min-height:
-      70px;
+      64px;
 
     padding:
-      10px 17px;
+      8px 18px;
 
     font-size:
-      21px;
+      20px;
+
+  }
+
+  .system-top {
+
+    min-height:
+      77px;
+
+  }
+
+  .system-title {
+
+    max-width:
+      55%;
+
+    font-size:
+      15px;
+
+  }
+
+  .system-back {
+
+    min-width:
+      135px;
+
+    min-height:
+      54px;
+
+    padding:
+      7px 12px;
+
+    font-size:
+      15px;
 
   }
 
@@ -2413,20 +3166,1936 @@ body.simple-mode
 
 
 /* =========================================================
-   22. 動畫
+   22. 減少動畫
 ========================================================= */
 
-@keyframes introPulse {
+@media (prefers-reduced-motion: reduce) {
 
-  0%,100% {
-    transform:
-      scale(.96);
-  }
+  *,
+  *::before,
+  *::after {
 
-  50% {
-    transform:
-      scale(1.05);
+    animation-duration:
+      .01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      .01ms !important;
+
+    scroll-behavior:
+      auto !important;
+
   }
 
 }
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     啟動畫面
+===================================================== -->
+
+<div id="intro">
+
+  <div class="intro-content">
+
+    <div class="intro-orb"></div>
+
+    <div class="intro-title">
+      學前科補助服務入口
+    </div>
+
+    <div class="intro-subtitle">
+      臺北市政府教育局｜服務系統啟動中
+    </div>
+
+    <div class="intro-loading">
+      正在準備補助服務入口…
+    </div>
+
+    <div class="intro-bar"></div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     宇宙背景
+===================================================== -->
+
+<canvas id="spaceCanvas"></canvas>
+
+<div class="space-vignette"></div>
+
+<div class="space-grid"></div>
+
+
+<!-- =====================================================
+     主體
+===================================================== -->
+
+<main class="main">
+
+
+  <!-- ===================================================
+       HEADER
+  ==================================================== -->
+
+  <header class="topbar">
+
+
+    <div class="brand">
+
+      <div class="brand-orb"></div>
+
+      <div>
+
+        <div class="brand-name">
+          臺北市政府教育局
+        </div>
+
+        <div class="brand-sub">
+          學前科｜補助進度與領具服務
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="top-actions">
+
+      <button
+        id="fontToggle"
+        class="utility-button"
+        type="button"
+      >
+        A＋ 放大文字
+      </button>
+
+
+      <button
+        id="simpleToggle"
+        class="utility-button"
+        type="button"
+      >
+        ◐ 簡潔模式
+      </button>
+
+    </div>
+
+
+  </header>
+
+
+  <!-- ===================================================
+       HERO
+  ==================================================== -->
+
+  <section class="hero">
+
+
+    <div class="hero-copy">
+
+
+      <div class="eyebrow">
+
+        <span class="eyebrow-dot"></span>
+
+        補助服務總入口
+
+      </div>
+
+
+      <h1>
+
+        歡迎進入
+
+        <span class="gradient-text">
+          補助服務宇宙
+        </span>
+
+      </h1>
+
+
+      <p class="hero-description">
+
+        這裡整合臺北市政府教育局學前科的
+        <strong>
+          補助進度、公告與領具服務。
+        </strong>
+
+        請直接選擇您需要的補助項目，
+        就可以進入對應的服務系統。
+
+      </p>
+
+
+      <div class="hero-notice">
+
+        <div class="notice-icon">
+          ✓
+        </div>
+
+        <div>
+
+          <strong>
+            操作很簡單
+          </strong>
+
+          <br>
+
+          找到您需要的補助，
+          按下「立即進入」即可。
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+    <!-- =================================================
+         3D 宇宙門
+    ================================================== -->
+
+    <div class="portal-area">
+
+
+      <div class="portal-halo"></div>
+
+
+      <div class="portal-stage">
+
+
+        <div class="portal-ring"></div>
+
+
+        <div class="portal-floor"></div>
+
+
+        <div
+          class="door-wrapper"
+          id="doorWrapper"
+        >
+
+
+          <div class="door-inner">
+
+
+            <div class="portal-inside">
+
+              <div class="portal-core"></div>
+
+            </div>
+
+
+            <div class="portal-door left">
+
+              <div class="door-panel"></div>
+
+              <div class="door-handle"></div>
+
+            </div>
+
+
+            <div class="portal-door right">
+
+              <div class="door-panel"></div>
+
+              <div class="door-handle"></div>
+
+            </div>
+
+
+            <div class="door-line"></div>
+
+
+          </div>
+
+
+        </div>
+
+
+        <div class="portal-caption">
+
+          選擇補助後，服務入口會自動開啟
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+
+  </section>
+
+
+  <!-- ===================================================
+       補助服務
+  ==================================================== -->
+
+  <section
+    class="services"
+    id="services"
+  >
+
+
+    <div class="section-head">
+
+
+      <div>
+
+        <div class="section-kicker">
+          補助服務
+        </div>
+
+        <h2 class="section-title">
+          請選擇您要辦理的補助
+        </h2>
+
+      </div>
+
+
+      <div class="section-description">
+
+        每一個大按鈕都會進入對應的補助服務。
+        <br>
+        不知道該選哪一個時，請依照您要辦理的補助名稱選擇。
+
+      </div>
+
+
+    </div>
+
+
+    <div
+      id="servicesGrid"
+      class="services-grid"
+    ></div>
+
+
+    <!-- 操作教學 -->
+
+    <div class="guide">
+
+
+      <div class="guide-item">
+
+        <div class="guide-icon">
+          1
+        </div>
+
+        <div class="guide-text">
+
+          <strong>
+            選擇補助
+          </strong>
+
+          <span>
+            找到您要辦理的補助項目
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="guide-item">
+
+        <div class="guide-icon">
+          2
+        </div>
+
+        <div class="guide-text">
+
+          <strong>
+            按下「立即進入」
+          </strong>
+
+          <span>
+            系統會自動開啟服務
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="guide-item">
+
+        <div class="guide-icon">
+          3
+        </div>
+
+        <div class="guide-text">
+
+          <strong>
+            完成後返回
+          </strong>
+
+          <span>
+            按「← 返回補助入口」
+          </span>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+  </section>
+
+
+  <footer class="footer">
+
+    臺北市政府教育局學前科
+    ｜補助進度公告與領具填寫服務入口
+
+  </footer>
+
+
+</main>
+
+
+<!-- =====================================================
+     子系統視窗
+===================================================== -->
+
+<div
+  id="systemModal"
+  aria-hidden="true"
+>
+
+
+  <div class="system-shell">
+
+
+    <div class="system-top">
+
+
+      <div
+        id="systemTitle"
+        class="system-title"
+      >
+        補助服務系統
+      </div>
+
+
+      <button
+        id="systemBack"
+        class="system-back"
+        type="button"
+      >
+        ← 返回補助入口
+      </button>
+
+
+    </div>
+
+
+    <div
+      id="systemLoading"
+    >
+
+      <div class="loading-orb"></div>
+
+      <div class="loading-title">
+        正在開啟補助服務
+      </div>
+
+      <div class="loading-sub">
+        請稍候，系統正在載入服務…
+      </div>
+
+    </div>
+
+
+    <iframe
+      id="systemFrame"
+      title="補助服務子系統"
+      allow="
+        clipboard-read;
+        clipboard-write;
+        fullscreen;
+        camera;
+        microphone;
+        geolocation
+      "
+      allowfullscreen
+    ></iframe>
+
+
+  </div>
+
+
+</div>
+
+
+<!-- Toast -->
+
+<div id="toast"></div>
+
+
+<!-- =====================================================
+     Three.js
+===================================================== -->
+
+<script
+  src="https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.min.js"
+></script>
+
+
+<script>
+
+/* =========================================================
+   01. 【補助設定區】
+
+   ★ 未來新增補助只需要在這裡加資料 ★
+
+========================================================= */
+
+const SUBSIDIES = [
+
+  {
+
+    id:
+      "preschool-main",
+
+    name:
+      "學前補助進度公告與領具",
+
+    desc:
+      "查詢補助進度、查看公告，並辦理相關領具作業。",
+
+    icon:
+      "✦",
+
+    color:
+      "#68eaff",
+
+    url:
+      "https://script.google.com/macros/s/AKfycbxPRRr5QgFkR4KYU2d2eCJ0nVNn8o-FFGdw5539y66Gko_6tyjoVRTSR4hvuhYls9A9DQ/exec"
+
+  }
+
+
+  /*
+  ==========================================================
+  未來新增：
+
+  ,
+
+  {
+    id:
+      "subsidy-002",
+
+    name:
+      "○○補助",
+
+    desc:
+      "查看○○補助進度與辦理相關作業。",
+
+    icon:
+      "◈",
+
+    color:
+      "#a779ff",
+
+    url:
+      "https://script.google.com/macros/s/第二個GAS網址/exec"
+
+  }
+
+  */
+
+];
+
+
+/* =========================================================
+   02. URL 前端加密／混淆
+
+   注意：
+   純 GitHub Pages 前端無法做到真正的秘密 URL。
+
+   這裡採：
+   URL
+   ↓
+   XOR
+   ↓
+   Base64
+   ↓
+   runtime decode
+   ↓
+   iframe
+
+========================================================= */
+
+const URL_KEY =
+  "TAIPEI-PRESCHOOL-PORTAL-2026-SECURE";
+
+
+function bytesToBase64(
+  bytes
+) {
+
+  let binary =
+    "";
+
+  for (
+    const byte
+    of bytes
+  ) {
+
+    binary +=
+      String.fromCharCode(
+        byte
+      );
+
+  }
+
+  return btoa(
+    binary
+  );
+
+}
+
+
+function base64ToBytes(
+  base64
+) {
+
+  const binary =
+    atob(base64);
+
+  return Uint8Array.from(
+    binary,
+    character =>
+      character.charCodeAt(0)
+  );
+
+}
+
+
+function encryptEndpoint(
+  value
+) {
+
+  const data =
+    new TextEncoder()
+      .encode(value);
+
+  const key =
+    new TextEncoder()
+      .encode(URL_KEY);
+
+  const encrypted =
+    new Uint8Array(
+      data.length
+    );
+
+
+  for (
+    let i = 0;
+    i < data.length;
+    i++
+  ) {
+
+    encrypted[i] =
+      data[i] ^
+      key[
+        i %
+        key.length
+      ];
+
+  }
+
+
+  return bytesToBase64(
+    encrypted
+  );
+
+}
+
+
+function decryptEndpoint(
+  value
+) {
+
+  const encrypted =
+    base64ToBytes(value);
+
+  const key =
+    new TextEncoder()
+      .encode(URL_KEY);
+
+  const decrypted =
+    new Uint8Array(
+      encrypted.length
+    );
+
+
+  for (
+    let i = 0;
+    i < encrypted.length;
+    i++
+  ) {
+
+    decrypted[i] =
+      encrypted[i] ^
+      key[
+        i %
+        key.length
+      ];
+
+  }
+
+
+  return new TextDecoder()
+    .decode(
+      decrypted
+    );
+
+}
+
+
+/* =========================================================
+   03. Runtime URL Store
+========================================================= */
+
+const ENDPOINT_STORE =
+  new Map();
+
+
+SUBSIDIES.forEach(
+  subsidy => {
+
+    ENDPOINT_STORE.set(
+
+      subsidy.id,
+
+      encryptEndpoint(
+        subsidy.url
+      )
+
+    );
+
+  }
+);
+
+
+function getEndpoint(
+  id
+) {
+
+  const encrypted =
+    ENDPOINT_STORE.get(id);
+
+
+  if (!encrypted) {
+
+    throw new Error(
+      "找不到補助服務入口。"
+    );
+
+  }
+
+
+  return decryptEndpoint(
+    encrypted
+  );
+
+}
+
+
+/* =========================================================
+   04. DOM
+========================================================= */
+
+const servicesGrid =
+  document.getElementById(
+    "servicesGrid"
+  );
+
+const systemModal =
+  document.getElementById(
+    "systemModal"
+  );
+
+const systemFrame =
+  document.getElementById(
+    "systemFrame"
+  );
+
+const systemTitle =
+  document.getElementById(
+    "systemTitle"
+  );
+
+const systemBack =
+  document.getElementById(
+    "systemBack"
+  );
+
+const systemLoading =
+  document.getElementById(
+    "systemLoading"
+  );
+
+const doorWrapper =
+  document.getElementById(
+    "doorWrapper"
+  );
+
+const toast =
+  document.getElementById(
+    "toast"
+  );
+
+const fontToggle =
+  document.getElementById(
+    "fontToggle"
+  );
+
+const simpleToggle =
+  document.getElementById(
+    "simpleToggle"
+  );
+
+
+/* =========================================================
+   05. HTML Escape
+========================================================= */
+
+function escapeHTML(
+  value
+) {
+
+  return String(value)
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+
+}
+
+
+/* =========================================================
+   06. Toast
+========================================================= */
+
+let toastTimer;
+
+
+function showToast(
+  message
+) {
+
+  toast.textContent =
+    message;
+
+
+  toast.classList.add(
+    "show"
+  );
+
+
+  clearTimeout(
+    toastTimer
+  );
+
+
+  toastTimer =
+    setTimeout(
+      () => {
+
+        toast.classList.remove(
+          "show"
+        );
+
+      },
+      3500
+    );
+
+}
+
+
+/* =========================================================
+   07. 自動建立補助按鈕
+========================================================= */
+
+function renderServices() {
+
+  servicesGrid.innerHTML =
+    "";
+
+
+  SUBSIDIES.forEach(
+    (
+      subsidy,
+      index
+    ) => {
+
+
+      const card =
+        document.createElement(
+          "article"
+        );
+
+
+      card.className =
+        "service-card";
+
+
+      card.style.setProperty(
+        "--accent",
+        subsidy.color
+      );
+
+
+      card.innerHTML = `
+
+        <div class="service-number">
+          ${String(index + 1)
+            .padStart(2,"0")}
+        </div>
+
+
+        <div
+          class="service-icon"
+          aria-hidden="true"
+        >
+          ${escapeHTML(
+            subsidy.icon
+          )}
+        </div>
+
+
+        <h3>
+          ${escapeHTML(
+            subsidy.name
+          )}
+        </h3>
+
+
+        <p>
+          ${escapeHTML(
+            subsidy.desc
+          )}
+        </p>
+
+
+        <div class="service-bottom">
+
+
+          <div class="service-status">
+
+            <span class="online-dot"></span>
+
+            可使用
+
+          </div>
+
+
+          <div class="service-action">
+            立即進入 →
+          </div>
+
+
+        </div>
+
+      `;
+
+
+      card.setAttribute(
+        "role",
+        "button"
+      );
+
+
+      card.setAttribute(
+        "tabindex",
+        "0"
+      );
+
+
+      card.setAttribute(
+        "aria-label",
+        `進入${subsidy.name}`
+      );
+
+
+      card.addEventListener(
+        "click",
+        () => {
+
+          openService(
+            subsidy
+          );
+
+        }
+      );
+
+
+      card.addEventListener(
+        "keydown",
+        event => {
+
+          if (
+            event.key === "Enter" ||
+            event.key === " "
+          ) {
+
+            event.preventDefault();
+
+            openService(
+              subsidy
+            );
+
+          }
+
+        }
+      );
+
+
+      servicesGrid.appendChild(
+        card
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   08. 開啟補助
+========================================================= */
+
+function openService(
+  subsidy
+) {
+
+  let endpoint;
+
+
+  try {
+
+    endpoint =
+      getEndpoint(
+        subsidy.id
+      );
+
+  }
+  catch (error) {
+
+    console.error(error);
+
+    showToast(
+      "目前無法開啟這項服務，請稍後再試。"
+    );
+
+    return;
+
+  }
+
+
+  /*
+    開門
+  */
+
+  doorWrapper.classList.add(
+    "open"
+  );
+
+
+  /*
+    更新視窗標題
+  */
+
+  systemTitle.textContent =
+    subsidy.name;
+
+
+  /*
+    Loading
+  */
+
+  systemLoading.classList.remove(
+    "hide"
+  );
+
+
+  /*
+    開啟 Modal
+  */
+
+  systemModal.classList.add(
+    "active"
+  );
+
+
+  systemModal.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+
+  document.body.style.overflow =
+    "hidden";
+
+
+  /*
+    等待門打開再載入系統
+  */
+
+  setTimeout(
+    () => {
+
+      systemFrame.src =
+        endpoint;
+
+    },
+    650
+  );
+
+}
+
+
+/* =========================================================
+   09. 關閉補助
+========================================================= */
+
+function closeService() {
+
+  systemModal.classList.remove(
+    "active"
+  );
+
+
+  systemModal.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+
+  systemLoading.classList.remove(
+    "hide"
+  );
+
+
+  setTimeout(
+    () => {
+
+      systemFrame.src =
+        "about:blank";
+
+
+      doorWrapper.classList.remove(
+        "open"
+      );
+
+    },
+    450
+  );
+
+
+  document.body.style.overflow =
+    "";
+
+}
+
+
+/* =========================================================
+   10. Iframe 載入完成
+========================================================= */
+
+systemFrame.addEventListener(
+  "load",
+  () => {
+
+    systemLoading.classList.add(
+      "hide"
+    );
+
+  }
+);
+
+
+/* =========================================================
+   11. 返回
+========================================================= */
+
+systemBack.addEventListener(
+  "click",
+  closeService
+);
+
+
+/* =========================================================
+   12. ESC
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key === "Escape" &&
+      systemModal.classList.contains(
+        "active"
+      )
+    ) {
+
+      closeService();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   13. 大字模式
+========================================================= */
+
+fontToggle.addEventListener(
+  "click",
+  () => {
+
+    document.body.classList.toggle(
+      "large-text"
+    );
+
+
+    const active =
+      document.body.classList.contains(
+        "large-text"
+      );
+
+
+    fontToggle.textContent =
+      active
+        ? "A－ 一般文字"
+        : "A＋ 放大文字";
+
+  }
+);
+
+
+/* =========================================================
+   14. 簡潔模式
+========================================================= */
+
+simpleToggle.addEventListener(
+  "click",
+  () => {
+
+    document.body.classList.toggle(
+      "simple-mode"
+    );
+
+
+    const active =
+      document.body.classList.contains(
+        "simple-mode"
+      );
+
+
+    simpleToggle.textContent =
+      active
+        ? "◉ 恢復動畫"
+        : "◐ 簡潔模式";
+
+  }
+);
+
+
+/* =========================================================
+   15. 頁面載入
+========================================================= */
+
+window.addEventListener(
+  "load",
+  () => {
+
+    renderServices();
+
+
+    setTimeout(
+      () => {
+
+        document
+          .getElementById(
+            "intro"
+          )
+          .classList.add(
+            "hidden"
+          );
+
+      },
+      1300
+    );
+
+  }
+);
+
+
+/* =========================================================
+   16. THREE.JS 宇宙
+========================================================= */
+
+(function initUniverse() {
+
+
+  const canvas =
+    document.getElementById(
+      "spaceCanvas"
+    );
+
+
+  const renderer =
+    new THREE.WebGLRenderer({
+
+      canvas,
+
+      alpha:
+        true,
+
+      antialias:
+        true,
+
+      powerPreference:
+        "high-performance"
+
+    });
+
+
+  renderer.setPixelRatio(
+    Math.min(
+      window.devicePixelRatio,
+      1.6
+    )
+  );
+
+
+  renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+  );
+
+
+  const scene =
+    new THREE.Scene();
+
+
+  const camera =
+    new THREE.PerspectiveCamera(
+
+      60,
+
+      window.innerWidth /
+      window.innerHeight,
+
+      .1,
+
+      1800
+
+    );
+
+
+  camera.position.z =
+    850;
+
+
+  /*
+    主星群
+  */
+
+  const count =
+    window.innerWidth < 700
+      ? 2300
+      : 5200;
+
+
+  const positions =
+    new Float32Array(
+      count * 3
+    );
+
+
+  for (
+    let i = 0;
+    i < count;
+    i++
+  ) {
+
+
+    const radius =
+      140 +
+      Math.pow(
+        Math.random(),
+        .55
+      ) * 1050;
+
+
+    const theta =
+      Math.random() *
+      Math.PI * 2;
+
+
+    const phi =
+      Math.acos(
+        2 * Math.random() - 1
+      );
+
+
+    positions[
+      i * 3
+    ] =
+      radius *
+      Math.sin(phi) *
+      Math.cos(theta);
+
+
+    positions[
+      i * 3 + 1
+    ] =
+      radius *
+      Math.sin(phi) *
+      Math.sin(theta);
+
+
+    positions[
+      i * 3 + 2
+    ] =
+      radius *
+      Math.cos(phi);
+
+  }
+
+
+  const geometry =
+    new THREE.BufferGeometry();
+
+
+  geometry.setAttribute(
+
+    "position",
+
+    new THREE.BufferAttribute(
+      positions,
+      3
+    )
+
+  );
+
+
+  const material =
+    new THREE.PointsMaterial({
+
+      color:
+        0xa8e4ff,
+
+      size:
+        window.innerWidth < 700
+          ? 1.5
+          : 1.85,
+
+      transparent:
+        true,
+
+      opacity:
+        .72,
+
+      depthWrite:
+        false,
+
+      blending:
+        THREE.AdditiveBlending
+
+    });
+
+
+  const stars =
+    new THREE.Points(
+      geometry,
+      material
+    );
+
+
+  scene.add(
+    stars
+  );
+
+
+  /*
+    第二層紫色宇宙
+  */
+
+  const purpleCount =
+    Math.floor(
+      count * .23
+    );
+
+
+  const purplePositions =
+    new Float32Array(
+      purpleCount * 3
+    );
+
+
+  for (
+    let i = 0;
+    i < purpleCount;
+    i++
+  ) {
+
+
+    const radius =
+      170 +
+      Math.random() * 650;
+
+
+    const angle =
+      Math.random() *
+      Math.PI * 2;
+
+
+    purplePositions[
+      i * 3
+    ] =
+      Math.cos(angle) *
+      radius;
+
+
+    purplePositions[
+      i * 3 + 1
+    ] =
+      (
+        Math.random() -
+        .5
+      ) * 500;
+
+
+    purplePositions[
+      i * 3 + 2
+    ] =
+      Math.sin(angle) *
+      radius;
+
+  }
+
+
+  const purpleGeometry =
+    new THREE.BufferGeometry();
+
+
+  purpleGeometry.setAttribute(
+
+    "position",
+
+    new THREE.BufferAttribute(
+      purplePositions,
+      3
+    )
+
+  );
+
+
+  const purpleMaterial =
+    new THREE.PointsMaterial({
+
+      color:
+        0xbd91ff,
+
+      size:
+        2.1,
+
+      transparent:
+        true,
+
+      opacity:
+        .33,
+
+      depthWrite:
+        false,
+
+      blending:
+        THREE.AdditiveBlending
+
+    });
+
+
+  const purpleStars =
+    new THREE.Points(
+      purpleGeometry,
+      purpleMaterial
+    );
+
+
+  scene.add(
+    purpleStars
+  );
+
+
+  /*
+    重力核心
+  */
+
+  const gravityCore =
+    new THREE.Mesh(
+
+      new THREE.SphereGeometry(
+        40,
+        32,
+        32
+      ),
+
+      new THREE.MeshBasicMaterial({
+
+        color:
+          0x68eaff,
+
+        transparent:
+          true,
+
+        opacity:
+          .035
+
+      })
+
+    );
+
+
+  scene.add(
+    gravityCore
+  );
+
+
+  /*
+    重力環
+  */
+
+  const gravityGroup =
+    new THREE.Group();
+
+
+  for (
+    let i = 0;
+    i < 6;
+    i++
+  ) {
+
+
+    const ring =
+      new THREE.Mesh(
+
+        new THREE.TorusGeometry(
+
+          95 +
+          i * 42,
+
+          .7 +
+          i * .15,
+
+          8,
+
+          180
+
+        ),
+
+        new THREE.MeshBasicMaterial({
+
+          color:
+            i % 2 === 0
+              ? 0x68eaff
+              : 0x9e76ff,
+
+          transparent:
+            true,
+
+          opacity:
+            .06 +
+            i * .012,
+
+          blending:
+            THREE.AdditiveBlending
+
+        })
+
+      );
+
+
+    ring.rotation.x =
+      Math.PI / 2;
+
+
+    ring.rotation.z =
+      i * .33;
+
+
+    gravityGroup.add(
+      ring
+    );
+
+  }
+
+
+  scene.add(
+    gravityGroup
+  );
+
+
+  /*
+    滑鼠視差
+  */
+
+  let mouseX =
+    0;
+
+  let mouseY =
+    0;
+
+  let smoothX =
+    0;
+
+  let smoothY =
+    0;
+
+
+  window.addEventListener(
+    "pointermove",
+    event => {
+
+      mouseX =
+        (
+          event.clientX /
+          window.innerWidth -
+          .5
+        ) * 2;
+
+
+      mouseY =
+        (
+          event.clientY /
+          window.innerHeight -
+          .5
+        ) * 2;
+
+    }
+  );
+
+
+  /*
+    動畫
+  */
+
+  const clock =
+    new THREE.Clock();
+
+
+  function animate() {
+
+
+    requestAnimationFrame(
+      animate
+    );
+
+
+    const time =
+      clock.getElapsedTime();
+
+
+    smoothX +=
+      (
+        mouseX -
+        smoothX
+      ) * .015;
+
+
+    smoothY +=
+      (
+        mouseY -
+        smoothY
+      ) * .015;
+
+
+    /*
+      星群
+    */
+
+    stars.rotation.y +=
+      .00015;
+
+
+    stars.rotation.x =
+      Math.sin(
+        time * .08
+      ) * .03;
+
+
+    /*
+      紫色粒子
+    */
+
+    purpleStars.rotation.y -=
+      .00023;
+
+
+    purpleStars.rotation.z +=
+      .00006;
+
+
+    /*
+      重力環
+    */
+
+    gravityGroup.rotation.y =
+      time * .075;
+
+
+    gravityGroup.rotation.x =
+      .84 +
+      Math.sin(
+        time * .22
+      ) * .05;
+
+
+    /*
+      相機
+    */
+
+    camera.position.x +=
+      (
+        smoothX * 42 -
+        camera.position.x
+      ) * .02;
+
+
+    camera.position.y +=
+      (
+        -smoothY * 28 -
+        camera.position.y
+      ) * .02;
+
+
+    camera.lookAt(
+      0,
+      0,
+      0
+    );
+
+
+    /*
+      重力波
+    */
+
+    const pulse =
+      1 +
+      Math.sin(
+        time * 1.2
+      ) * .09;
+
+
+    gravityCore.scale.set(
+      pulse,
+      pulse,
+      pulse
+    );
+
+
+    renderer.render(
+      scene,
+      camera
+    );
+
+  }
+
+
+  animate();
+
+
+  /*
+    Resize
+  */
+
+  window.addEventListener(
+    "resize",
+    () => {
+
+      camera.aspect =
+        window.innerWidth /
+        window.innerHeight;
+
+
+      camera.updateProjectionMatrix();
+
+
+      renderer.setSize(
+        window.innerWidth,
+        window.innerHeight
+      );
+
+    }
+  );
+
+
+})();
+
+
+/* =========================================================
+   17. Public API
+========================================================= */
+
+window.PreschoolPortal = {
+
+  subsidies:
+    SUBSIDIES,
+
+  openService,
+
+  closeService
+
+};
+
+</script>
+
+</body>
+</html>
 ```
