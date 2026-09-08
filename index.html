@@ -1,0 +1,3025 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>臺北市政府教育局｜學前科補助進度與領具系統</title>
+
+<meta
+  name="description"
+  content="臺北市政府教育局學前科補助進度公告與領具填寫總入口"
+/>
+
+<style>
+/* =========================================================
+   01. GLOBAL
+========================================================= */
+
+:root {
+  --bg0: #02040b;
+  --bg1: #07101e;
+  --bg2: #0b1630;
+
+  --text: #eef5ff;
+  --muted: #99a9c7;
+
+  --cyan: #5de7ff;
+  --blue: #5d8bff;
+  --purple: #9b6cff;
+  --pink: #ff5fb7;
+
+  --glass: rgba(8, 17, 37, 0.58);
+  --glass-strong: rgba(7, 14, 31, 0.88);
+
+  --border: rgba(255,255,255,0.12);
+
+  --shadow:
+    0 20px 70px rgba(0,0,0,.42),
+    inset 0 1px 0 rgba(255,255,255,.08);
+
+  --radius: 24px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 50% 20%, rgba(63,117,255,.16), transparent 34%),
+    radial-gradient(circle at 20% 80%, rgba(154,83,255,.12), transparent 28%),
+    radial-gradient(circle at 85% 75%, rgba(0,215,255,.09), transparent 25%),
+    linear-gradient(145deg, var(--bg0), var(--bg1) 48%, var(--bg2));
+
+  font-family:
+    "Noto Sans TC",
+    "PingFang TC",
+    "Microsoft JhengHei",
+    sans-serif;
+}
+
+button {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   02. BACKGROUND
+========================================================= */
+
+#spaceCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.space-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 25%,
+      rgba(0,0,0,.20) 65%,
+      rgba(0,0,0,.68) 100%
+    );
+}
+
+.space-grid {
+  position: fixed;
+  left: -20%;
+  right: -20%;
+  bottom: -18%;
+  height: 58%;
+  z-index: 1;
+  pointer-events: none;
+
+  opacity: .16;
+
+  background-image:
+    linear-gradient(rgba(100,180,255,.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100,180,255,.15) 1px, transparent 1px);
+
+  background-size: 70px 70px;
+
+  transform:
+    perspective(550px)
+    rotateX(68deg);
+
+  mask-image: linear-gradient(
+    to top,
+    black,
+    transparent 90%
+  );
+}
+
+
+/* =========================================================
+   03. INTRO LOADER
+========================================================= */
+
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(circle, rgba(34,65,130,.20), transparent 42%),
+    #01030a;
+
+  transition:
+    opacity 1s ease,
+    visibility 1s ease;
+}
+
+#intro.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.intro-core {
+  width: min(420px, 84vw);
+  text-align: center;
+}
+
+.intro-orbit {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 28px;
+}
+
+.intro-orbit::before,
+.intro-orbit::after {
+  content: "";
+  position: absolute;
+  inset: 14px;
+
+  border: 1px solid rgba(106,220,255,.42);
+  border-radius: 50%;
+
+  animation: orbitSpin 4s linear infinite;
+}
+
+.intro-orbit::after {
+  inset: 28px;
+  border-color: rgba(171,107,255,.34);
+  animation-duration: 2.8s;
+  animation-direction: reverse;
+}
+
+.intro-orb {
+  position: absolute;
+  inset: 50px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 32% 28%,
+      #ffffff,
+      #7be8ff 25%,
+      #477dff 55%,
+      #4624a6
+    );
+
+  box-shadow:
+    0 0 25px #5de7ff,
+    0 0 75px rgba(93,231,255,.65),
+    0 0 130px rgba(132,91,255,.36);
+
+  animation:
+    pulseCore 1.6s ease-in-out infinite;
+}
+
+.intro-title {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.intro-subtitle {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: .08em;
+}
+
+.intro-progress {
+  width: 100%;
+  height: 2px;
+  margin-top: 28px;
+
+  background: rgba(255,255,255,.08);
+  overflow: hidden;
+}
+
+.intro-progress::before {
+  content: "";
+  display: block;
+  width: 35%;
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #5de7ff,
+      #a473ff,
+      transparent
+    );
+
+  animation: loadingBar 1.3s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   04. MAIN
+========================================================= */
+
+.main {
+  position: relative;
+  z-index: 5;
+
+  min-height: 100vh;
+  padding: 42px 22px 80px;
+}
+
+.container {
+  width: min(1280px, 100%);
+  margin: auto;
+}
+
+
+/* =========================================================
+   05. HEADER
+========================================================= */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-orb {
+  position: relative;
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      white,
+      #67e8ff 20%,
+      #557cff 50%,
+      #401b9a
+    );
+
+  box-shadow:
+    0 0 20px rgba(93,231,255,.5),
+    0 0 55px rgba(106,91,255,.3);
+}
+
+.brand-orb::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+
+  border:
+    1px solid rgba(102,227,255,.24);
+
+  border-radius: 50%;
+
+  transform: rotate(-22deg) scaleY(.45);
+}
+
+.brand-name {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.brand-sub {
+  margin-top: 3px;
+
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.system-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 9px 13px;
+
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 999px;
+
+  background: rgba(255,255,255,.035);
+
+  color: #c9d6ef;
+  font-size: 11px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #46ffb0;
+
+  box-shadow:
+    0 0 9px #46ffb0;
+
+  animation: statusBlink 1.7s infinite;
+}
+
+
+/* =========================================================
+   06. HERO
+========================================================= */
+
+.hero {
+  min-height: calc(100vh - 140px);
+
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.05fr)
+    minmax(440px, .95fr);
+
+  align-items: center;
+
+  gap: 38px;
+
+  padding-top: 35px;
+}
+
+.hero-copy {
+  animation: heroEnter 1.1s cubic-bezier(.17,.84,.44,1) .45s both;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 8px 12px;
+
+  border:
+    1px solid rgba(93,231,255,.18);
+
+  border-radius: 999px;
+
+  background: rgba(93,231,255,.045);
+
+  color: #9cefff;
+
+  font-size: 11px;
+  letter-spacing: .12em;
+
+  text-transform: uppercase;
+}
+
+.eyebrow i {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: var(--cyan);
+  box-shadow: 0 0 10px var(--cyan);
+}
+
+.hero h1 {
+  max-width: 850px;
+
+  margin-top: 23px;
+
+  font-size:
+    clamp(40px, 6vw, 82px);
+
+  line-height: 1.02;
+  font-weight: 900;
+
+  letter-spacing: -.045em;
+}
+
+.hero h1 .gradient {
+  background:
+    linear-gradient(
+      100deg,
+      #ffffff 0%,
+      #c9f8ff 25%,
+      #76dfff 47%,
+      #9c7bff 72%,
+      #df75ff 100%
+    );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-description {
+  max-width: 660px;
+
+  margin-top: 25px;
+
+  color: #a8b6d1;
+
+  font-size: clamp(15px, 1.45vw, 18px);
+  line-height: 1.9;
+}
+
+.hero-description strong {
+  color: #ecf5ff;
+}
+
+
+/* =========================================================
+   07. 3D DOOR PORTAL
+========================================================= */
+
+.portal-wrap {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 560px;
+
+  perspective: 1800px;
+
+  animation: heroEnter 1.1s cubic-bezier(.17,.84,.44,1) .65s both;
+}
+
+.portal-glow {
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(74,220,255,.24),
+      rgba(106,70,255,.13) 35%,
+      transparent 72%
+    );
+
+  filter: blur(10px);
+
+  animation:
+    portalBreath 3.5s ease-in-out infinite;
+}
+
+.portal-platform {
+  position: absolute;
+
+  width: 460px;
+  height: 120px;
+
+  bottom: 26px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(80,185,255,.22),
+      rgba(80,185,255,.08) 35%,
+      transparent 70%
+    );
+
+  filter: blur(2px);
+}
+
+.portal-floor {
+  position: absolute;
+
+  bottom: 66px;
+
+  width: 310px;
+  height: 110px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(84,221,255,.35);
+
+  transform:
+    perspective(800px)
+    rotateX(68deg);
+
+  box-shadow:
+    0 0 25px rgba(84,221,255,.15),
+    inset 0 0 30px rgba(84,221,255,.12);
+}
+
+.portal-ring {
+  position: absolute;
+
+  width: 375px;
+  height: 475px;
+
+  border-radius: 48% 48% 40% 40%;
+
+  border:
+    1px solid rgba(98,225,255,.30);
+
+  box-shadow:
+    0 0 18px rgba(98,225,255,.15),
+    inset 0 0 30px rgba(98,225,255,.08);
+
+  transform: translateZ(-40px);
+
+  animation:
+    ringFloat 4.5s ease-in-out infinite;
+}
+
+.portal-ring::before,
+.portal-ring::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 15px;
+
+  border-radius: inherit;
+
+  border:
+    1px solid rgba(168,105,255,.19);
+}
+
+.portal-ring::after {
+  inset: 30px;
+  border-color: rgba(98,225,255,.10);
+}
+
+.portal-frame {
+  position: relative;
+
+  width: 310px;
+  height: 430px;
+
+  transform-style: preserve-3d;
+
+  transform:
+    translateZ(10px)
+    rotateY(-3deg);
+
+  transition:
+    transform 1.6s cubic-bezier(.16,1,.3,1);
+
+  z-index: 4;
+}
+
+.portal-frame:hover {
+  transform:
+    translateZ(20px)
+    rotateY(3deg)
+    rotateX(-1deg);
+}
+
+.door-frame {
+  position: absolute;
+  inset: 0;
+
+  border-radius:
+    150px 150px 20px 20px;
+
+  border:
+    1px solid rgba(121,227,255,.34);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(135,240,255,.08),
+      rgba(87,71,255,.08) 50%,
+      rgba(255,93,190,.07)
+    );
+
+  box-shadow:
+    0 0 20px rgba(82,228,255,.14),
+    inset 0 0 35px rgba(96,226,255,.07);
+
+  overflow: hidden;
+}
+
+.portal-door {
+  position: absolute;
+
+  top: 8px;
+  bottom: 8px;
+
+  width: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(7,15,35,.98),
+      rgba(18,30,66,.94)
+    );
+
+  border:
+    1px solid rgba(157,226,255,.14);
+
+  box-shadow:
+    inset 0 0 25px rgba(92,221,255,.05);
+
+  transition:
+    transform 1.7s cubic-bezier(.16,1,.3,1);
+}
+
+.portal-door.left {
+  left: 8px;
+
+  border-radius:
+    143px 8px 8px 8px;
+
+  transform-origin: left center;
+}
+
+.portal-door.right {
+  right: 8px;
+
+  border-radius:
+    8px 143px 8px 8px;
+
+  transform-origin: right center;
+}
+
+.portal-frame.opening .portal-door.left {
+  transform:
+    rotateY(-98deg)
+    translateZ(12px);
+}
+
+.portal-frame.opening .portal-door.right {
+  transform:
+    rotateY(98deg)
+    translateZ(12px);
+}
+
+.door-panel {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  top: 90px;
+  bottom: 25px;
+
+  border: 1px solid rgba(255,255,255,.05);
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.035),
+      transparent 60%
+    );
+}
+
+.door-line {
+  position: absolute;
+
+  left: 50%;
+  top: 110px;
+
+  width: 1px;
+  height: 230px;
+
+  background:
+    linear-gradient(
+      transparent,
+      rgba(110,227,255,.7),
+      transparent
+    );
+
+  opacity: .5;
+}
+
+.door-handle {
+  position: absolute;
+
+  top: 54%;
+
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #8beeff;
+
+  box-shadow:
+    0 0 10px #8beeff;
+}
+
+.portal-door.left .door-handle {
+  right: 15px;
+}
+
+.portal-door.right .door-handle {
+  left: 15px;
+}
+
+.portal-inside {
+  position: absolute;
+  inset: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  border-radius:
+    140px 140px 14px 14px;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(83,234,255,.55),
+      rgba(69,87,255,.22) 24%,
+      rgba(54,20,114,.26) 45%,
+      rgba(0,0,0,.94) 82%
+    );
+
+  box-shadow:
+    inset 0 0 80px rgba(88,222,255,.28);
+}
+
+.portal-core {
+  position: relative;
+
+  width: 160px;
+  height: 160px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 38% 36%,
+      #ffffff,
+      #b5f8ff 10%,
+      #61e6ff 24%,
+      #6262ff 48%,
+      #29125f 73%,
+      transparent 74%
+    );
+
+  filter: saturate(1.3);
+
+  box-shadow:
+    0 0 30px rgba(82,228,255,.8),
+    0 0 100px rgba(100,78,255,.55),
+    0 0 170px rgba(214,71,255,.25);
+
+  animation:
+    coreFloat 2.8s ease-in-out infinite;
+}
+
+.portal-core::before {
+  content: "";
+
+  position: absolute;
+  inset: -45px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid rgba(111,232,255,.27);
+
+  transform:
+    scaleX(1.45)
+    rotate(-24deg);
+
+  animation:
+    coreRing 5s linear infinite;
+}
+
+.portal-core::after {
+  content: "";
+
+  position: absolute;
+  inset: -23px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid rgba(186,110,255,.22);
+
+  animation:
+    coreRing 3.5s linear infinite reverse;
+}
+
+
+/* =========================================================
+   08. CTA
+========================================================= */
+
+.portal-hint {
+  position: absolute;
+
+  bottom: -3px;
+
+  text-align: center;
+
+  color: #92a3bf;
+
+  font-size: 11px;
+  letter-spacing: .12em;
+}
+
+.portal-hint span {
+  color: #d9e9ff;
+}
+
+
+/* =========================================================
+   09. GRANTS SECTION
+========================================================= */
+
+.section {
+  padding-top: 55px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  margin-bottom: 25px;
+}
+
+.section-kicker {
+  color: #71e7ff;
+
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.section-title {
+  margin-top: 7px;
+
+  font-size:
+    clamp(27px, 3vw, 42px);
+
+  font-weight: 800;
+  letter-spacing: -.025em;
+}
+
+.section-description {
+  max-width: 500px;
+
+  color: var(--muted);
+
+  font-size: 13px;
+  line-height: 1.7;
+  text-align: right;
+}
+
+.grants-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+.grant-card {
+  position: relative;
+
+  min-height: 235px;
+
+  padding: 26px;
+
+  overflow: hidden;
+
+  border:
+    1px solid rgba(255,255,255,.10);
+
+  border-radius: var(--radius);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(17,31,61,.68),
+      rgba(5,11,26,.72)
+    );
+
+  box-shadow: var(--shadow);
+
+  cursor: pointer;
+
+  transition:
+    transform .45s cubic-bezier(.16,1,.3,1),
+    border-color .4s ease,
+    background .4s ease;
+}
+
+.grant-card::before {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--grant-color, #5de7ff),
+      transparent
+    );
+
+  opacity: .55;
+}
+
+.grant-card:hover {
+  transform:
+    translateY(-8px)
+    scale(1.012);
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--grant-color, #5de7ff) 35%,
+      rgba(255,255,255,.1)
+    );
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(23,46,88,.80),
+      rgba(8,15,34,.80)
+    );
+}
+
+.grant-card::after {
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  top: -90px;
+  right: -90px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      color-mix(
+        in srgb,
+        var(--grant-color, #5de7ff) 20%,
+        transparent
+      ),
+      transparent 68%
+    );
+
+  pointer-events: none;
+}
+
+.grant-icon {
+  width: 58px;
+  height: 58px;
+
+  display: grid;
+  place-items: center;
+
+  border:
+    1px solid rgba(255,255,255,.12);
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.10),
+      rgba(255,255,255,.025)
+    );
+
+  font-size: 25px;
+
+  box-shadow:
+    0 8px 30px
+    color-mix(
+      in srgb,
+      var(--grant-color, #5de7ff) 15%,
+      transparent
+    );
+}
+
+.grant-card h3 {
+  margin-top: 22px;
+
+  font-size: 19px;
+  line-height: 1.45;
+}
+
+.grant-card p {
+  margin-top: 9px;
+
+  color: #92a2bf;
+
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.grant-footer {
+  position: absolute;
+
+  left: 26px;
+  right: 26px;
+  bottom: 23px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  color: #9cb0cf;
+
+  font-size: 11px;
+}
+
+.enter-arrow {
+  width: 34px;
+  height: 34px;
+
+  display: grid;
+  place-items: center;
+
+  border:
+    1px solid rgba(255,255,255,.10);
+
+  border-radius: 50%;
+
+  background: rgba(255,255,255,.035);
+
+  transition:
+    transform .35s ease,
+    background .35s ease;
+}
+
+.grant-card:hover .enter-arrow {
+  transform: translateX(4px);
+
+  background:
+    var(--grant-color, #5de7ff);
+
+  color: #06101c;
+
+}
+
+
+/* =========================================================
+   10. FOOTER
+========================================================= */
+
+.footer {
+  margin-top: 75px;
+
+  padding-top: 20px;
+
+  border-top:
+    1px solid rgba(255,255,255,.07);
+
+  color: #687996;
+
+  font-size: 11px;
+  text-align: center;
+}
+
+
+/* =========================================================
+   11. MODAL / IFRAME
+========================================================= */
+
+#portalModal {
+  position: fixed;
+  inset: 0;
+
+  z-index: 10000;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 18px;
+
+  background:
+    rgba(0,0,0,.84);
+
+  backdrop-filter: blur(18px);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity .4s ease,
+    visibility .4s ease;
+}
+
+#portalModal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-shell {
+  position: relative;
+
+  width: min(1500px, 100%);
+  height: min(94vh, 100%);
+
+  overflow: hidden;
+
+  border:
+    1px solid rgba(119,220,255,.20);
+
+  border-radius: 20px;
+
+  background: #02050c;
+
+  box-shadow:
+    0 30px 130px rgba(0,0,0,.75),
+    0 0 50px rgba(74,163,255,.12);
+
+  transform:
+    translateY(30px)
+    scale(.97);
+
+  transition:
+    transform .55s cubic-bezier(.16,1,.3,1);
+}
+
+#portalModal.active .modal-shell {
+  transform:
+    translateY(0)
+    scale(1);
+}
+
+.modal-header {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 53px;
+
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 16px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(3,8,18,.96),
+      rgba(3,8,18,.78),
+      transparent
+    );
+
+  pointer-events: none;
+}
+
+.modal-title {
+  pointer-events: auto;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  color: #dce8fb;
+}
+
+.close-modal {
+  pointer-events: auto;
+
+  width: 36px;
+  height: 36px;
+
+  border:
+    1px solid rgba(255,255,255,.12);
+
+  border-radius: 50%;
+
+  background:
+    rgba(8,17,36,.82);
+
+  color: white;
+
+  cursor: pointer;
+
+  font-size: 18px;
+
+  transition:
+    transform .3s ease,
+    background .3s ease;
+}
+
+.close-modal:hover {
+  transform: rotate(90deg);
+
+  background:
+    rgba(255,255,255,.12);
+}
+
+#portalIframe {
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+
+  background: white;
+
+  padding-top: 0;
+}
+
+.iframe-loading {
+  position: absolute;
+  inset: 0;
+
+  z-index: 3;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(42,86,170,.25),
+      rgba(0,0,0,.9) 70%
+    );
+
+  opacity: 1;
+
+  transition: opacity .5s ease;
+}
+
+.iframe-loading.done {
+  opacity: 0;
+}
+
+.loading-ring {
+  width: 60px;
+  height: 60px;
+
+  border:
+    2px solid rgba(255,255,255,.09);
+
+  border-top-color: #5de7ff;
+
+  border-right-color: #9b6cff;
+
+  border-radius: 50%;
+
+  animation:
+    spin .8s linear infinite;
+}
+
+
+/* =========================================================
+   12. TOAST
+========================================================= */
+
+#toast {
+  position: fixed;
+
+  left: 50%;
+  bottom: 30px;
+
+  z-index: 11000;
+
+  max-width: min(560px, calc(100vw - 30px));
+
+  padding: 12px 16px;
+
+  border:
+    1px solid rgba(255,255,255,.1);
+
+  border-radius: 12px;
+
+  background:
+    rgba(8,15,30,.92);
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.4);
+
+  color: #dbe9fb;
+
+  font-size: 12px;
+
+  transform:
+    translate(-50%, 25px);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    .35s ease;
+}
+
+#toast.show {
+  transform:
+    translate(-50%, 0);
+
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/* =========================================================
+   13. RESPONSIVE
+========================================================= */
+
+@media (max-width: 1050px) {
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .hero-copy {
+    text-align: center;
+  }
+
+  .hero-description {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .portal-wrap {
+    min-height: 500px;
+  }
+
+  .grants-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .section-header {
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .section-description {
+    text-align: left;
+  }
+}
+
+
+@media (max-width: 670px) {
+
+  .main {
+    padding:
+      24px 15px 60px;
+  }
+
+  .topbar {
+    align-items: flex-start;
+  }
+
+  .system-status {
+    display: none;
+  }
+
+  .hero {
+    min-height: auto;
+    padding-top: 65px;
+  }
+
+  .hero h1 {
+    font-size: 43px;
+  }
+
+  .portal-wrap {
+    min-height: 480px;
+    transform: scale(.90);
+  }
+
+  .grants-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-header {
+    display: block;
+  }
+
+  .section-description {
+    margin-top: 10px;
+  }
+
+  .modal-shell {
+    height: 97vh;
+    border-radius: 13px;
+  }
+
+  #portalIframe {
+    height: 100%;
+  }
+}
+
+
+/* =========================================================
+   14. ANIMATIONS
+========================================================= */
+
+@keyframes orbitSpin {
+  from { transform: rotate(0deg) scaleY(.55); }
+  to   { transform: rotate(360deg) scaleY(.55); }
+}
+
+@keyframes pulseCore {
+  0%,100% {
+    transform: scale(.94);
+    opacity: .8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+@keyframes loadingBar {
+  0%   { transform: translateX(-140%); }
+  100% { transform: translateX(400%); }
+}
+
+@keyframes statusBlink {
+  0%,100% { opacity: .45; }
+  50% { opacity: 1; }
+}
+
+@keyframes heroEnter {
+  from {
+    opacity: 0;
+    transform:
+      translateY(35px)
+      scale(.98);
+    filter: blur(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes portalBreath {
+  0%,100% {
+    transform: scale(.92);
+    opacity: .65;
+  }
+
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+@keyframes ringFloat {
+  0%,100% {
+    transform:
+      translateZ(-40px)
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translateZ(-40px)
+      translateY(-9px);
+  }
+}
+
+@keyframes coreFloat {
+  0%,100% {
+    transform:
+      translateY(0)
+      scale(.96);
+  }
+
+  50% {
+    transform:
+      translateY(-10px)
+      scale(1.04);
+  }
+}
+
+@keyframes coreRing {
+  from {
+    transform:
+      rotate(0deg)
+      scaleX(1.45)
+      rotate(-24deg);
+  }
+
+  to {
+    transform:
+      rotate(360deg)
+      scaleX(1.45)
+      rotate(-24deg);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   15. REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+
+}
+</style>
+</head>
+
+
+<body>
+
+<!-- =======================================================
+     INTRO
+======================================================= -->
+
+<div id="intro">
+
+  <div class="intro-core">
+
+    <div class="intro-orbit">
+      <div class="intro-orb"></div>
+    </div>
+
+    <div class="intro-title">
+      學前科補助服務入口
+    </div>
+
+    <div class="intro-subtitle">
+      TAIPEI EDUCATION DEPARTMENT · PRESCHOOL DIVISION
+    </div>
+
+    <div class="intro-progress"></div>
+
+  </div>
+
+</div>
+
+
+<!-- =======================================================
+     BACKGROUND
+======================================================= -->
+
+<canvas id="spaceCanvas"></canvas>
+
+<div class="space-vignette"></div>
+<div class="space-grid"></div>
+
+
+<!-- =======================================================
+     MAIN
+======================================================= -->
+
+<main class="main">
+
+  <div class="container">
+
+
+    <!-- HEADER -->
+
+    <header class="topbar">
+
+      <div class="brand">
+
+        <div class="brand-orb"></div>
+
+        <div>
+          <div class="brand-name">
+            臺北市政府教育局
+          </div>
+
+          <div class="brand-sub">
+            學前科｜補助進度與領具服務
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="system-status">
+
+        <span class="status-dot"></span>
+
+        SYSTEM ONLINE
+
+      </div>
+
+    </header>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+      <div class="hero-copy">
+
+        <div class="eyebrow">
+          <i></i>
+          Preschool Subsidy Portal
+        </div>
+
+
+        <h1>
+
+          進入
+          <span class="gradient">
+            補助服務宇宙
+          </span>
+
+        </h1>
+
+
+        <p class="hero-description">
+
+          臺北市政府教育局學前科
+          <strong>
+            補助進度公告、領具與相關作業
+          </strong>
+          的集中入口。
+
+          選擇所需補助服務，
+          即可進入對應的專屬子系統。
+
+        </p>
+
+      </div>
+
+
+      <!-- 3D PORTAL -->
+
+      <div class="portal-wrap">
+
+        <div class="portal-glow"></div>
+
+        <div class="portal-platform"></div>
+
+        <div class="portal-floor"></div>
+
+        <div class="portal-ring"></div>
+
+
+        <div
+          class="portal-frame"
+          id="portalFrame"
+        >
+
+          <div class="portal-inside">
+
+            <div class="portal-core"></div>
+
+          </div>
+
+
+          <div class="door-frame">
+
+            <div
+              class="portal-door left"
+            >
+
+              <div class="door-panel"></div>
+
+              <div class="door-handle"></div>
+
+            </div>
+
+
+            <div
+              class="portal-door right"
+            >
+
+              <div class="door-panel"></div>
+
+              <div class="door-handle"></div>
+
+            </div>
+
+
+            <div class="door-line"></div>
+
+          </div>
+
+        </div>
+
+
+        <div class="portal-hint">
+          <span>點擊下方補助項目</span>
+          即可開啟服務入口
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- GRANTS -->
+
+    <section
+      class="section"
+      id="services"
+    >
+
+      <div class="section-header">
+
+        <div>
+
+          <div class="section-kicker">
+            SERVICE MODULES
+          </div>
+
+          <h2 class="section-title">
+            補助服務入口
+          </h2>
+
+        </div>
+
+
+        <div class="section-description">
+
+          每一項補助均可配置自己的子系統。
+          <br>
+          新增補助後，入口卡片會自動建立。
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="grants-grid"
+        id="grantsGrid"
+      >
+      </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+      臺北市政府教育局學前科｜
+      補助進度公告與領具填寫服務入口
+
+    </footer>
+
+  </div>
+
+</main>
+
+
+<!-- =======================================================
+     IFRAME MODAL
+======================================================= -->
+
+<div
+  id="portalModal"
+  aria-hidden="true"
+>
+
+  <div class="modal-shell">
+
+    <div class="modal-header">
+
+      <div
+        class="modal-title"
+        id="modalTitle"
+      >
+        補助服務系統
+      </div>
+
+
+      <button
+        type="button"
+        class="close-modal"
+        id="closeModal"
+        aria-label="關閉"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div
+      class="iframe-loading"
+      id="iframeLoading"
+    >
+      <div class="loading-ring"></div>
+    </div>
+
+
+    <iframe
+      id="portalIframe"
+      title="補助服務系統"
+      allow="
+        clipboard-read;
+        clipboard-write;
+        fullscreen;
+        geolocation;
+        microphone;
+        camera
+      "
+      allowfullscreen
+    ></iframe>
+
+  </div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div id="toast"></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.min.js"></script>
+
+
+<script>
+/* =========================================================
+   01. 補助資料設定區
+=========================================================
+
+   ★★★ 以後新增補助只需要新增一筆資料 ★★★
+
+   name  = 補助名稱
+   desc  = 卡片說明
+   icon  = 圖示
+   color = 主題色
+   url   = GAS Web App URL
+
+========================================================= */
+
+const GRANTS = [
+
+  {
+    id: "preschool-demo",
+
+    name: "學前補助進度公告與領具",
+
+    desc: "查看補助申請進度、公告資訊及相關領具作業。",
+
+    icon: "✦",
+
+    color: "#5de7ff",
+
+    /*
+      這裡放你的 GAS 網址。
+      系統啟動後會透過 runtime encoder 進行混淆。
+    */
+
+    url:
+      "https://script.google.com/macros/s/AKfycbxPRRr5QgFkR4KYU2d2eCJ0nVNn8o-FFGdw5539y66Gko_6tyjoVRTSR4hvuhYls9A9DQ/exec"
+  }
+
+  /*
+    ★ 新增第二個補助：
+
+    ,
+    {
+      id: "grant-002",
+      name: "第二項補助名稱",
+      desc: "第二項補助說明。",
+      icon: "◈",
+      color: "#9b6cff",
+      url: "https://script.google.com/macros/s/xxxxxxxx/exec"
+    }
+
+  */
+
+];
+
+
+/* =========================================================
+   02. URL 混淆層
+=========================================================
+
+   注意：
+   GitHub Pages 純前端環境不能真正保密 URL。
+
+   這一層的用途：
+   1. 不直接把完整網址放進 HTML iframe src
+   2. 執行時才組合 URL
+   3. 降低一般原始碼檢視者直接看到網址的機率
+   4. 避免把 URL 當作公開資料顯示
+
+========================================================= */
+
+
+/*
+  字串轉 Base64
+*/
+
+function encodeURL(url) {
+
+  const bytes =
+    new TextEncoder().encode(url);
+
+  let binary = "";
+
+  bytes.forEach(
+    byte => {
+      binary += String.fromCharCode(byte);
+    }
+  );
+
+  return btoa(binary);
+}
+
+
+/*
+  Base64 還原
+*/
+
+function decodeURL(encoded) {
+
+  const binary =
+    atob(encoded);
+
+  const bytes =
+    Uint8Array.from(
+      binary,
+      char => char.charCodeAt(0)
+    );
+
+  return new TextDecoder()
+    .decode(bytes);
+}
+
+
+/*
+  runtime storage
+
+  注意：
+  這不是密碼學安全，只是混淆。
+*/
+
+const runtimeURLStore =
+  new Map();
+
+
+GRANTS.forEach(grant => {
+
+  const token =
+    encodeURL(grant.url);
+
+  runtimeURLStore.set(
+    grant.id,
+    token
+  );
+
+});
+
+
+function getGrantURL(id) {
+
+  const token =
+    runtimeURLStore.get(id);
+
+  if (!token) {
+    throw new Error(
+      "找不到補助系統網址：" + id
+    );
+  }
+
+  return decodeURL(token);
+}
+
+
+/* =========================================================
+   03. DOM
+========================================================= */
+
+const grantsGrid =
+  document.getElementById("grantsGrid");
+
+const portalModal =
+  document.getElementById("portalModal");
+
+const portalIframe =
+  document.getElementById("portalIframe");
+
+const portalFrame =
+  document.getElementById("portalFrame");
+
+const closeModal =
+  document.getElementById("closeModal");
+
+const modalTitle =
+  document.getElementById("modalTitle");
+
+const iframeLoading =
+  document.getElementById("iframeLoading");
+
+const toast =
+  document.getElementById("toast");
+
+
+/* =========================================================
+   04. TOAST
+========================================================= */
+
+let toastTimer = null;
+
+
+function showToast(message) {
+
+  toast.textContent =
+    message;
+
+  toast.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer =
+    setTimeout(
+      () => {
+        toast.classList.remove("show");
+      },
+      3200
+    );
+}
+
+
+/* =========================================================
+   05. CREATE GRANT CARDS
+========================================================= */
+
+function renderGrantCards() {
+
+  grantsGrid.innerHTML = "";
+
+
+  GRANTS.forEach(
+    (grant, index) => {
+
+      const card =
+        document.createElement("article");
+
+      card.className =
+        "grant-card";
+
+      card.style.setProperty(
+        "--grant-color",
+        grant.color
+      );
+
+
+      card.innerHTML = `
+
+        <div
+          class="grant-icon"
+          aria-hidden="true"
+        >
+          ${escapeHTML(grant.icon)}
+        </div>
+
+
+        <h3>
+          ${escapeHTML(grant.name)}
+        </h3>
+
+
+        <p>
+          ${escapeHTML(grant.desc)}
+        </p>
+
+
+        <div class="grant-footer">
+
+          <span>
+            MODULE ${String(index + 1).padStart(2, "0")}
+          </span>
+
+          <span class="enter-arrow">
+            →
+          </span>
+
+        </div>
+
+      `;
+
+
+      card.addEventListener(
+        "click",
+        () => {
+
+          openGrant(grant);
+
+        }
+      );
+
+
+      grantsGrid.appendChild(card);
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   06. HTML ESCAPE
+========================================================= */
+
+function escapeHTML(value) {
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+/* =========================================================
+   07. OPEN GRANT
+========================================================= */
+
+function openGrant(grant) {
+
+  let url;
+
+  try {
+
+    url =
+      getGrantURL(grant.id);
+
+  }
+  catch (error) {
+
+    console.error(error);
+
+    showToast(
+      "目前無法取得此補助系統入口。"
+    );
+
+    return;
+  }
+
+
+  modalTitle.textContent =
+    grant.name;
+
+
+  iframeLoading.classList.remove(
+    "done"
+  );
+
+
+  portalIframe.src =
+    "about:blank";
+
+
+  portalModal.classList.add(
+    "active"
+  );
+
+  portalModal.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+
+  /*
+    製造「開門」效果
+  */
+
+  portalFrame.classList.add(
+    "opening"
+  );
+
+
+  /*
+    等待門開啟後再載入 iframe
+    讓視覺感更完整
+  */
+
+  setTimeout(
+    () => {
+
+      portalIframe.src =
+        url;
+
+    },
+    650
+  );
+
+
+  document.body.style.overflow =
+    "hidden";
+
+}
+
+
+/* =========================================================
+   08. CLOSE GRANT
+========================================================= */
+
+function closeGrant() {
+
+  portalModal.classList.remove(
+    "active"
+  );
+
+  portalModal.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+
+  portalFrame.classList.remove(
+    "opening"
+  );
+
+
+  setTimeout(
+    () => {
+
+      portalIframe.src =
+        "about:blank";
+
+      iframeLoading.classList.remove(
+        "done"
+      );
+
+    },
+    500
+  );
+
+
+  document.body.style.overflow =
+    "";
+
+}
+
+
+/* =========================================================
+   09. IFRAME LOAD
+========================================================= */
+
+portalIframe.addEventListener(
+  "load",
+  () => {
+
+    /*
+      about:blank 也會觸發 load，
+      但 opacity 處理不會影響功能。
+    */
+
+    iframeLoading.classList.add(
+      "done"
+    );
+
+  }
+);
+
+
+/* =========================================================
+   10. CLOSE EVENTS
+========================================================= */
+
+closeModal.addEventListener(
+  "click",
+  closeGrant
+);
+
+
+portalModal.addEventListener(
+  "click",
+  event => {
+
+    /*
+      點擊最外層黑色背景關閉
+    */
+
+    if (
+      event.target === portalModal
+    ) {
+      closeGrant();
+    }
+
+  }
+);
+
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key === "Escape" &&
+      portalModal.classList.contains("active")
+    ) {
+
+      closeGrant();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   11. INTRO
+========================================================= */
+
+window.addEventListener(
+  "load",
+  () => {
+
+    renderGrantCards();
+
+
+    setTimeout(
+      () => {
+
+        document
+          .getElementById("intro")
+          .classList.add("hidden");
+
+      },
+      1050
+    );
+
+  }
+);
+
+
+/* =========================================================
+   12. THREE.JS COSMIC PARTICLES
+========================================================= */
+
+(function initSpace() {
+
+  const canvas =
+    document.getElementById("spaceCanvas");
+
+
+  const renderer =
+    new THREE.WebGLRenderer({
+      canvas,
+      antialias: true,
+      alpha: true,
+      powerPreference: "high-performance"
+    });
+
+
+  renderer.setPixelRatio(
+    Math.min(
+      window.devicePixelRatio,
+      1.8
+    )
+  );
+
+
+  renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+  );
+
+
+  const scene =
+    new THREE.Scene();
+
+
+  const camera =
+    new THREE.PerspectiveCamera(
+      60,
+      window.innerWidth /
+        window.innerHeight,
+      0.1,
+      1800
+    );
+
+
+  camera.position.z =
+    900;
+
+
+  /*
+    粒子數量
+  */
+
+  const count =
+    window.innerWidth < 700
+      ? 3200
+      : 6500;
+
+
+  const positions =
+    new Float32Array(
+      count * 3
+    );
+
+
+  const speeds =
+    new Float32Array(
+      count
+    );
+
+
+  const gravity =
+    new Float32Array(
+      count
+    );
+
+
+  /*
+    建立宇宙粒子
+  */
+
+  for (
+    let i = 0;
+    i < count;
+    i++
+  ) {
+
+    const radius =
+      100 +
+      Math.pow(
+        Math.random(),
+        .55
+      ) * 1050;
+
+
+    const theta =
+      Math.random() *
+      Math.PI * 2;
+
+
+    const phi =
+      Math.acos(
+        2 * Math.random() - 1
+      );
+
+
+    positions[i * 3] =
+      radius *
+      Math.sin(phi) *
+      Math.cos(theta);
+
+
+    positions[i * 3 + 1] =
+      radius *
+      Math.sin(phi) *
+      Math.sin(theta);
+
+
+    positions[i * 3 + 2] =
+      radius *
+      Math.cos(phi);
+
+
+    speeds[i] =
+      .0005 +
+      Math.random() * .002;
+
+
+    gravity[i] =
+      Math.random();
+
+  }
+
+
+  const geometry =
+    new THREE.BufferGeometry();
+
+
+  geometry.setAttribute(
+    "position",
+    new THREE.BufferAttribute(
+      positions,
+      3
+    )
+  );
+
+
+  const material =
+    new THREE.PointsMaterial({
+
+      color: 0x9cdcff,
+
+      size:
+        window.innerWidth < 700
+          ? 1.4
+          : 1.8,
+
+      transparent: true,
+
+      opacity: .72,
+
+      blending:
+        THREE.AdditiveBlending,
+
+      depthWrite: false
+
+    });
+
+
+  const particles =
+    new THREE.Points(
+      geometry,
+      material
+    );
+
+
+  scene.add(
+    particles
+  );
+
+
+  /*
+    第二層紫色宇宙粒子
+  */
+
+  const auraCount =
+    Math.floor(count * .28);
+
+
+  const auraPositions =
+    new Float32Array(
+      auraCount * 3
+    );
+
+
+  for (
+    let i = 0;
+    i < auraCount;
+    i++
+  ) {
+
+    const radius =
+      180 +
+      Math.random() * 500;
+
+
+    const angle =
+      Math.random() *
+      Math.PI * 2;
+
+
+    auraPositions[i * 3] =
+      Math.cos(angle) *
+      radius;
+
+
+    auraPositions[i * 3 + 1] =
+      (
+        Math.random() -
+        .5
+      ) * 400;
+
+
+    auraPositions[i * 3 + 2] =
+      Math.sin(angle) *
+      radius;
+
+  }
+
+
+  const auraGeometry =
+    new THREE.BufferGeometry();
+
+
+  auraGeometry.setAttribute(
+    "position",
+    new THREE.BufferAttribute(
+      auraPositions,
+      3
+    )
+  );
+
+
+  const auraMaterial =
+    new THREE.PointsMaterial({
+
+      color: 0xb780ff,
+
+      size: 2.1,
+
+      transparent: true,
+
+      opacity: .34,
+
+      blending:
+        THREE.AdditiveBlending,
+
+      depthWrite: false
+
+    });
+
+
+  const aura =
+    new THREE.Points(
+      auraGeometry,
+      auraMaterial
+    );
+
+
+  scene.add(
+    aura
+  );
+
+
+  /*
+    模擬重力子／重力井
+  */
+
+  const gravityCore =
+    new THREE.Mesh(
+
+      new THREE.SphereGeometry(
+        42,
+        32,
+        32
+      ),
+
+      new THREE.MeshBasicMaterial({
+
+        color: 0x6deaff,
+
+        transparent: true,
+
+        opacity: .035
+
+      })
+
+    );
+
+
+  scene.add(
+    gravityCore
+  );
+
+
+  /*
+    重力環
+  */
+
+  const ringGroup =
+    new THREE.Group();
+
+
+  const ringCount =
+    5;
+
+
+  for (
+    let i = 0;
+    i < ringCount;
+    i++
+  ) {
+
+    const ring =
+      new THREE.Mesh(
+
+        new THREE.TorusGeometry(
+          100 + i * 42,
+          .65 + i * .18,
+          8,
+          180
+        ),
+
+        new THREE.MeshBasicMaterial({
+
+          color:
+            i % 2 === 0
+              ? 0x58e6ff
+              : 0x8d6bff,
+
+          transparent: true,
+
+          opacity:
+            .08 + i * .012,
+
+          blending:
+            THREE.AdditiveBlending
+
+        })
+
+      );
+
+
+    ring.rotation.x =
+      Math.PI * .5;
+
+
+    ring.rotation.z =
+      i * .35;
+
+
+    ringGroup.add(
+      ring
+    );
+
+  }
+
+
+  scene.add(
+    ringGroup
+  );
+
+
+  /*
+    Smooth mouse/parallax
+  */
+
+  let targetX = 0;
+  let targetY = 0;
+
+  let currentX = 0;
+  let currentY = 0;
+
+
+  window.addEventListener(
+    "pointermove",
+    event => {
+
+      targetX =
+        (
+          event.clientX /
+          window.innerWidth -
+          .5
+        ) * 2;
+
+
+      targetY =
+        (
+          event.clientY /
+          window.innerHeight -
+          .5
+        ) * 2;
+
+    }
+  );
+
+
+  const clock =
+    new THREE.Clock();
+
+
+  function animate() {
+
+    const elapsed =
+      clock.getElapsedTime();
+
+
+    requestAnimationFrame(
+      animate
+    );
+
+
+    currentX +=
+      (
+        targetX -
+        currentX
+      ) * .015;
+
+
+    currentY +=
+      (
+        targetY -
+        currentY
+      ) * .015;
+
+
+    /*
+      粒子群旋轉
+    */
+
+    particles.rotation.y +=
+      .00018;
+
+
+    particles.rotation.x =
+      Math.sin(elapsed * .08)
+      * .035;
+
+
+    aura.rotation.y -=
+      .00025;
+
+
+    aura.rotation.z +=
+      .0001;
+
+
+    /*
+      重力環
+    */
+
+    ringGroup.rotation.y =
+      elapsed * .08;
+
+
+    ringGroup.rotation.x =
+      .85 +
+      Math.sin(
+        elapsed * .25
+      ) * .07;
+
+
+    /*
+      相機視差
+    */
+
+    camera.position.x +=
+      (
+        currentX * 38 -
+        camera.position.x
+      ) * .02;
+
+
+    camera.position.y +=
+      (
+        -currentY * 25 -
+        camera.position.y
+      ) * .02;
+
+
+    camera.lookAt(
+      0,
+      0,
+      0
+    );
+
+
+    /*
+      模擬局部重力波動
+    */
+
+    const pulse =
+      1 +
+      Math.sin(
+        elapsed * 1.2
+      ) * .09;
+
+
+    gravityCore.scale.set(
+      pulse,
+      pulse,
+      pulse
+    );
+
+
+    renderer.render(
+      scene,
+      camera
+    );
+
+  }
+
+
+  animate();
+
+
+  /*
+    Resize
+  */
+
+  window.addEventListener(
+    "resize",
+    () => {
+
+      camera.aspect =
+        window.innerWidth /
+        window.innerHeight;
+
+
+      camera.updateProjectionMatrix();
+
+
+      renderer.setSize(
+        window.innerWidth,
+        window.innerHeight
+      );
+
+    }
+  );
+
+
+})();
+
+
+/* =========================================================
+   13. PERFORMANCE / VISIBILITY
+========================================================= */
+
+document.addEventListener(
+  "visibilitychange",
+  () => {
+
+    /*
+      分頁切走時，不額外做複雜運算。
+      Three.js requestAnimationFrame 本身會受到瀏覽器節流。
+    */
+
+  }
+);
+
+
+/* =========================================================
+   14. DEBUG API
+=========================================================
+
+   開發者如果要快速查看目前有哪些補助：
+
+   console.table(GRANTS)
+
+========================================================= */
+
+window.PreschoolPortal =
+  Object.freeze({
+
+    grants: GRANTS,
+
+    openGrant,
+
+    getGrantURL
+
+  });
+
+</script>
+
+</body>
+</html>
+```
